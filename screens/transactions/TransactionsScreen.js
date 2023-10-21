@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const LoginScreen = () => {
+const TransactionsScreen = () => {
 	return (
 		<View style={styles.container}>
-			<Text>Login Screen</Text>
+			<Text>Transactions Screen</Text>
 		</View>
 	);
 };
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default LoginScreen;
+export default TransactionsScreen;
