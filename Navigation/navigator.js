@@ -1,12 +1,14 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import React, { useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import LoginScreen from '../screens/login/LoginScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
-import Dashboardcreen from "../screens/dashboard/DashboardScreen";
-import TransactionsScreen from "../screens/transactions/TransactionsScreen";
+import Dashboardcreen from '../screens/dashboard/DashboardScreen';
+import TransactionsScreen from '../screens/transactions/TransactionsScreen';
+
+import AuthContext from '../context/AuthContext';
 
 const RootStack = createStackNavigator();
 
@@ -35,27 +37,34 @@ const DrawerScreen = () => (
     </Drawer.Navigator>
 );
 
-export const RootStackScreen = ({ login }) => (
-    <RootStack.Navigator headerMode="none">
-        {login ? (
-            <RootStack.Screen
-                name="App"
-                component={DrawerScreen}
-                options={{
-                    animationEnabled: false,
-                }}
-            />
-        ) : (
-            <RootStack.Screen
-                name="Auth"
-                component={AuthStackScreen}
-                options={{
-                    animationEnabled: false,
-                }}
-            />
-        )}
-    </RootStack.Navigator>
-);
+export const RootStackScreen = () => {
+
+    const { signedIn } = useContext(AuthContext);
+
+    return(
+        <RootStack.Navigator screenOptions={{
+            headerShown: false
+          }}>
+            {signedIn !== null ? (
+                <RootStack.Screen
+                    name="App"
+                    component={DrawerScreen}
+                    options={{
+                        animationEnabled: false,
+                    }}
+                />
+            ) : (
+                <RootStack.Screen
+                    name="Auth"
+                    component={AuthStackScreen}
+                    options={{
+                        animationEnabled: false,
+                    }}
+                />
+            )}
+        </RootStack.Navigator>
+    );
+}
 
 const RootNavigator = (props) => {
     return (

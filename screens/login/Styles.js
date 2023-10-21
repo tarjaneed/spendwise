@@ -54,7 +54,7 @@ const styles = StyleSheet.create ({
     },
     textSignInButton: {
         color: 'white',
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
         fontSize: 20,
     },
     touchableForgotUserPassText: {
@@ -73,7 +73,7 @@ const styles = StyleSheet.create ({
     signUpText: {
         fontSize: 13,
         color: '#23c0f2',
-        fontFamily: 'sans-serif',
+        // fontFamily: 'sans-serif',
         marginBottom: 5,
     },
     signUpButton: {
