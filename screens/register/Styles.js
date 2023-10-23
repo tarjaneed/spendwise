@@ -10,10 +10,9 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f0ffff',
 	},
     infoContainer: {
-        height: 7*(deviceHeight/12),
+        height: 7 * (deviceHeight / 12),
         alignItems: 'center',
         marginTop: 15,
-        //backgroundColor: 'pink'
     },
     infoTextContainer: {
         flexDirection: 'row',
@@ -62,19 +61,17 @@ const styles = StyleSheet.create({
     },
     agreeText: {
         fontSize: 13,
-        fontFamily: 'sans-serif',
         marginLeft: 10,
         alignItems: 'center',
     },
     clickableTermText: {
         fontSize: 13,
-        fontFamily: 'sans-serif',
         fontWeight: 'bold',
         marginLeft: 4,
         alignItems: 'center',
     },
     touchableCreateAccountContainer: {
-        height: 2*(deviceHeight/14),
+        height: 2 * (deviceHeight / 14),
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -92,12 +89,10 @@ const styles = StyleSheet.create({
     },
     createAccountText: {
         color: 'white',
-        fontFamily: 'sans-serif',
         fontSize: 20,
     },
     existingAccountContainer: {
-        height: 2*(deviceHeight/12),
-        //backgroundColor: 'blue',
+        height: 2 * (deviceHeight / 12),
         flexDirection: 'row',
         justifyContent: 'center',
     },
@@ -107,11 +102,9 @@ const styles = StyleSheet.create({
     },
     loginText: {
         fontWeight: 'bold',
-        fontFamily: 'sans-serif',
         fontSize: 13,
         marginTop: 10,
         marginLeft: 6,
-
     }
 });
 

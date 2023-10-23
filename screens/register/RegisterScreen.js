@@ -1,9 +1,7 @@
-import React, { Component, useState } from 'react';
-import { AppRegistry, StyleSheet, Text, View, TouchableHighlight, Image, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TouchableHighlight, Image, TextInput } from 'react-native';
 import CheckBox from 'expo-checkbox';
-import Constants from 'expo-constants';
 import { styles } from './Styles'; 
-
 
 const RegisterScreen = ({ navigation }) => {
 

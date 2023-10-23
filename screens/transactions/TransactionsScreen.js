@@ -1,149 +1,216 @@
 import React, { useState, useContext } from 'react';
-import { AppRegistry, Text, View, TouchableHighlight, Image, TextInput, FlatList,TouchableOpacity, Button} from 'react-native';
-import Constants from 'expo-constants';
+import { AppRegistry, Text, View, TouchableHighlight, Image, TextInput, FlatList, TouchableOpacity, Button } from 'react-native';
 import { styles } from './Styles';
-
-
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const TransactionsScreen = () => {
-	return (
-		<View style={styles.container}>
-		<View
-                  style={styles.topContainer}>
-                  <TextInput
+
+    const [amount, setAmount] = useState('');
+
+    const handleTextChange = (text) => {
+        if (!text.startsWith('$')) {
+            text = '$' + text;
+        }
+        setAmount(text);
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.topContainer}>
+                <TextInput
                     style={styles.amountField}
                     autoFocus={true}
-                    placeholder="INR"
-                    keyboardType="numeric"
-                  />
-                </View>
-                <Text style={[styles.heading, {marginTop: 10}]}>
-                  Categories
+                    placeholder="Amount"
+                    keyboardType="decimal-pad"
+                    value={amount}
+                    onChangeText={handleTextChange}
+                />
+            </View>
+            
+            <View style={{ marginHorizontal: 5 }}>
+                <Text style={styles.heading}>
+                    Categories
                 </Text>
-				<View style= {styles.categoryItems}>
-				<TouchableOpacity
-                onPress={() => alert('Loan')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+            </View>
+            
 
-                  <Text style={styles.categoryText}>
-                    Loan
-                  </Text>
-              </TouchableOpacity>
-			  <TouchableOpacity
-                onPress={() => alert('Transport')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+            <View style={styles.categoryItems}>
+                <TouchableOpacity
+                    onPress={() => alert('Gift')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-                  <Text style={styles.categoryText}>
-                    Transport
-                  </Text>
-              </TouchableOpacity>
-			  <TouchableOpacity
-                onPress={() => alert('Food')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+                    <Text style={styles.categoryText}>
+                        Gift
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => alert('Education')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-                  <Text style={styles.categoryText}>
-                    Food
-                  </Text>
-              </TouchableOpacity>
-			  <TouchableOpacity
-                onPress={() => alert('Education')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+                    <Text style={styles.categoryText}>
+                        Education
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => alert('Food')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-                  <Text style={styles.categoryText}>
-				  Education
-                  </Text>
-              </TouchableOpacity>
+                    <Text style={styles.categoryText}>
+                        Food
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => alert('Travel')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-				</View>
+                    <Text style={styles.categoryText}>
+                        Travel
+                    </Text>
+                </TouchableOpacity>
 
+            </View>
 
-				<View style= {styles.categoryItems}>
-				<TouchableOpacity
-                onPress={() => alert('Household')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+            <View style={styles.categoryItems}>
+                <TouchableOpacity
+                    onPress={() => alert('Fitness')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-                  <Text style={styles.categoryText}>
-				  Household
-                  </Text>
-              </TouchableOpacity>
-			  <TouchableOpacity
-                onPress={() => alert('Health')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+                    <Text style={styles.categoryText}>
+                        Fitness
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => alert('Health')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-                  <Text style={styles.categoryText}>
-				  Health
-                  </Text>
-              </TouchableOpacity>
-			  <TouchableOpacity
-                onPress={() => alert('Gift')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+                    <Text style={styles.categoryText}>
+                        Health
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => alert('Loan')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-                  <Text style={styles.categoryText}>
-				  Gift
-                  </Text>
-              </TouchableOpacity>
-			  <TouchableOpacity
-                onPress={() => alert('Workout')}
-                style={[
-                  styles.categoryBox,
-                ]}>
+                    <Text style={styles.categoryText}>
+                        Loan
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => alert('Utilities')}
+                    style={[
+                        styles.categoryBox,
+                    ]}>
 
-                  <Text style={styles.categoryText}>
-				  Workout
-                  </Text>
-              </TouchableOpacity>
-				</View>
+                    <Text style={styles.categoryText}>
+                        Utilities
+                    </Text>
+                </TouchableOpacity>
+            </View>
 
-				<View style= {styles.addCategoryBox}>
-			  <TouchableOpacity
+            <View style={styles.addCategoryBox}>
+                <TouchableOpacity
                     //onPress={() => navigation.navigate('CategoryScreen')}
                     style={
-                      styles.addCategoryBox
+                        styles.addCategoryBox
                     }>
-                    <Text style={[styles.categoryText, {color: '#fff'}]}>
-                      + Create
+                    <Text style={[styles.categoryText, { fontSize: 18, fontWeight: 'bold', color: '#fff' }]}>
+                        + Create
                     </Text>
-                  </TouchableOpacity>
-				  </View>
+                </TouchableOpacity>
+            </View>
 
-				  <View style={{marginVertical: 10}}>
-                  <Text style={styles.heading}>Note</Text>
-                  <TextInput
+            <View style={{ marginHorizontal: 5 }}>
+                <Text style={styles.heading}>Date</Text>
+                <View style={styles.dateContainer}>
+                    <View style={styles.dateBoxes}>
+
+                        <TouchableOpacity
+                            style={[
+                                styles.dateBox,
+                                { marginRight: 30 },
+                            ]}>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.dateText}>
+                                    12/21
+                                </Text>
+                                <Text style={styles.dateText}>Yesterday</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={[
+                                styles.dateBox,
+                                { marginRight: 30 },
+                            ]}>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.dateText}>
+                                    12/20
+                                </Text>
+                                <Text style={styles.dateText}>Today</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={[
+                                styles.dateBox,
+                                { marginRight: 30 },
+                            ]}>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.dateText}>
+                                    12/19
+                                </Text>
+                                <Text style={styles.dateText}>Tomorrow</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.calendarIcon}
+                            onPress={() => {
+                                alert('');
+                            }}>
+                            <FontAwesome
+                                name="calendar"
+                                size={25}
+                                color={'#23c0f2'}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+
+            <View style={{ marginHorizontal: 8 }}>
+                <Text style={styles.heading}>Note</Text>
+                <TextInput
                     style={styles.note}
                     placeholder="Comment"
-                  />
-                </View>
+                />
+            </View>
 
-
-
-
-
-				  <View style= {styles.addButton}>
- 				<Button
-				mode="contained"
-                  title="Save"
-                  color={'white'}
-                  style={styles.addButton}>
-                  Save
+            <View style={styles.addButton}>
+                <Button
+                    mode="contained"
+                    title="Save"
+                    color={'white'}
+                    style={styles.addButton}>
+                       Save
                 </Button>
-				</View>
-				</View>
-	);
+            </View>
+        </View>
+    );
 };
-  
+
 export default TransactionsScreen;
