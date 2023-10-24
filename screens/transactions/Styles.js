@@ -10,23 +10,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0ffff',
     },
     topContainer: {
-        marginVertical: 10,
+        marginVertical: deviceHeight * 0.014,
         flexDirection: 'row',
         justifyContent: 'center',
     },
     heading: {
-        fontSize: 20,
-        marginVertical: 10,
+        fontSize: deviceHeight * 0.022,
+        marginVertical: deviceHeight * 0.014,
         fontWeight: 'bold',
         marginLeft: 5,
     },
     amountField: {
         backgroundColor: '#fff',
-        width: 100,
+        width: deviceWidth * 0.25,
         borderBottomWidth: 2,
-        fontSize: 20,
+        fontSize: deviceHeight * 0.022,
         textAlign: 'center',
-        padding: 12,
+        padding: deviceHeight * 0.015,
     },
     categoryBox: {
         borderWidth: 1,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         marginHorizontal: 3,
         padding: 7,
-        width: 85,
+        width: deviceWidth * 0.22,
         backgroundColor: '#fff',
     },
     addCategoryBox: {
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         color: '#000000',
         textAlign: 'center',
         paddingVertical: 5,
+        fontWeight: 'bold'
     },
     textContainer: {
         alignItems: 'center',
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingLeft: 10,
         paddingVertical: 16,
-        fontSize: 16
+        fontSize: deviceHeight * 0.018,
     },
     addButton: {
         borderRadius: 10,
@@ -93,7 +94,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     dateBox: {
-        width: 90,
         padding: 7,
         marginBottom: 10,
         borderRadius: 5,

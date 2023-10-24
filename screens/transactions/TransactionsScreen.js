@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { AppRegistry, Text, View, TouchableHighlight, Image, TextInput, FlatList, TouchableOpacity, Button } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
 import { styles } from './Styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -37,41 +37,33 @@ const TransactionsScreen = () => {
             <View style={styles.categoryItems}>
                 <TouchableOpacity
                     onPress={() => alert('Gift')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+                    <Text style={{ ...styles.categoryText, color: '#5F9EA0' }}>
                         Gift
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => alert('Education')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+                    <Text style={{ ...styles.categoryText, color: '#6495ED' }}>
                         Education
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => alert('Food')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+                    <Text style={{ ...styles.categoryText, color: '#FF7F50' }}>
                         Food
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => alert('Travel')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+                <Text style={{ ...styles.categoryText, color: '#BDB76B' }}> 
                         Travel
                     </Text>
                 </TouchableOpacity>
@@ -81,41 +73,33 @@ const TransactionsScreen = () => {
             <View style={styles.categoryItems}>
                 <TouchableOpacity
                     onPress={() => alert('Fitness')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+<                   Text style={{ ...styles.categoryText, color: '#9932CC' }}>
                         Fitness
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => alert('Health')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+                    <Text style={{ ...styles.categoryText, color: '#CD5C5C' }}>
                         Health
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => alert('Loan')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+                    <Text style={{ ...styles.categoryText, color: '#20B2AA' }}>
                         Loan
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => alert('Utilities')}
-                    style={[
-                        styles.categoryBox,
-                    ]}>
+                    style={[ styles.categoryBox ]}>
 
-                    <Text style={styles.categoryText}>
+                    <Text style={{ ...styles.categoryText, color: '#90EE90' }}>
                         Utilities
                     </Text>
                 </TouchableOpacity>
