@@ -4,11 +4,9 @@ import { styles } from './Styles';
 
 import AuthContext from '../../context/AuthContext';
 
-
 const Dashboardcreen = ({ navigation }) => {
 
 	const { signOut } = useContext(AuthContext);
-
 
 	return (
 		<View style={styles.container}>
@@ -28,7 +26,7 @@ const Dashboardcreen = ({ navigation }) => {
                         styles.addTransactionBox
                     }>
                     <Text style={[styles.transactionText, { fontSize: 16, fontWeight: 'bold', color: '#fff' }]}>
-                        + ADD TRASACTION
+                        + ADD TRANSACTION
                     </Text>
                 </TouchableOpacity>
             </View>

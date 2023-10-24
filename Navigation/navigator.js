@@ -23,15 +23,35 @@ const AuthStackScreen = () => (
             options={{ title: "Sign In", headerShown: false }}
         />
         <AuthStack.Screen
+            options={{
+                title: "Create Account",
+                headerStyle: {
+                    backgroundColor: '#005A9C',
+                },
+                headerTintColor: '#ffffff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }}
             name="CreateAccount"
             component={RegisterScreen}
-            options={{ title: "Create Account" }}
         />
     </AuthStack.Navigator>
 );
 
 const DrawerScreen = () => (
-    <Drawer.Navigator initialRouteName="Dashboard">
+    <Drawer.Navigator
+        screenOptions={{
+            headerStyle: {
+                backgroundColor: '#005A9C',
+            },
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        }}
+        initialRouteName="Dashboard"
+    >
         <Drawer.Screen name="Dashboard" component={Dashboardcreen} />
         <Drawer.Screen name="Transactions" component={TransactionsScreen} />
     </Drawer.Navigator>
@@ -41,10 +61,10 @@ export const RootStackScreen = () => {
 
     const { signedIn } = useContext(AuthContext);
 
-    return(
+    return (
         <RootStack.Navigator screenOptions={{
             headerShown: false
-          }}>
+        }}>
             {signedIn !== null ? (
                 <RootStack.Screen
                     name="App"

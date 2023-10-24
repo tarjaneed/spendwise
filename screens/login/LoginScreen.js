@@ -1,13 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { AppRegistry, Text, View, TouchableHighlight, Image, TextInput } from 'react-native';
-import Constants from 'expo-constants';
+import { Text, View, TouchableHighlight, Image, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from './Styles';
 
 import AuthContext from '../../context/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
 
-    const { signIn, signedIn } = useContext(AuthContext);
+    const { signIn } = useContext(AuthContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,15 +16,15 @@ const LoginScreen = ({ navigation }) => {
             <View style={styles.topContainer}>
                 <Image
                     source={{ uri: 'https://cdn-icons-png.flaticon.com/512/6915/6915987.png' }}
-                    style={{ height: 85, width: 85 }}
+                    style={styles.userLoginIcon}
                 />
             </View>
             <View style={styles.midContainer}>
                 <View style={styles.infoContainer}>
-                    <View style={styles.userIcon}>
+                    <View style={styles.inputIcon}>
                         <Image
                             source={{ uri: 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small/profile-icon-design-free-vector.jpg' }}
-                            style={{ height: 40, width: 40 }}
+                            style={styles.icon}
                         />
                     </View>
                     <View style={styles.textInputUserBox}>
@@ -40,10 +39,10 @@ const LoginScreen = ({ navigation }) => {
                 </View>
 
                 <View style={styles.infoContainer}>
-                    <View style={styles.lockIcon}>
+                    <View style={styles.inputIcon}>
                         <Image
                             source={{ uri: 'https://logowik.com/content/uploads/images/803_lock.jpg' }}
-                            style={{ height: 40, width: 40 }}
+                            style={styles.icon}
                         />
                     </View>
                     <View style={styles.textInputUserBox}>
@@ -58,36 +57,33 @@ const LoginScreen = ({ navigation }) => {
 
                 </View>
 
-                <TouchableHighlight
+                <TouchableOpacity
                     onPress={() => {
                         signIn(); // From Context
                     }}
+                    style={styles.touchableSignInButton}
                 >
-                    <View style={styles.touchableSignInButton}>
-                        <Text style={styles.textSignInButton}>
-                            Sign In
-                        </Text>
-                    </View>
-                </TouchableHighlight>
-                <View style={styles.touchableForgotUserPassText}>
-                    <TouchableHighlight
-                        onPress={() => {
-                            alert('You have pressed the Forgot User/Pass text')
-                        }}
-                    >
-                        <Text style={styles.forgotUserPassText}>
-                            Forgot username or password?
-                        </Text>
+                    <Text style={styles.textSignInButton}>
+                        Sign In
+                    </Text>
+                </TouchableOpacity>
 
-                    </TouchableHighlight>
-                </View>
-
+                <TouchableOpacity
+                    onPress={() => {
+                        alert('You have pressed the Forgot User/Pass text')
+                    }}
+                    style={styles.touchableForgotUserPassText}
+                >
+                    <Text style={styles.forgotUserPassText}>
+                        Forgot username or password?
+                    </Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.bottomContainer}>
                 <Text style={styles.signUpText}>
                     Not a member?
                 </Text>
-                <TouchableHighlight
+                <TouchableOpacity
                     onPress={() => {
                         navigation.navigate('CreateAccount')
                     }}
@@ -97,10 +93,8 @@ const LoginScreen = ({ navigation }) => {
                             Create account
                         </Text>
                     </View>
-                </TouchableHighlight>
-
+                </TouchableOpacity>
             </View>
-
         </View>
     );
 };

@@ -10,101 +10,88 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f0ffff',
 	},
     infoContainer: {
-        height: 7 * (deviceHeight / 12),
+        height: 7 * (deviceHeight / 21),
         alignItems: 'center',
-        marginTop: 15,
+        marginTop: 20,
     },
     infoTextContainer: {
         flexDirection: 'row',
     },
-    nameIcon: {
+    inputIcon: {
         backgroundColor: 'white',
-        height: 40, 
-        width: 40,
+        width: 2 * (deviceHeight / 43), 
+        height: 2 * (deviceHeight / 43), 
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    userIcon: {
-        backgroundColor: 'white',
-        height: 40, 
-        width: 40,
-    },
-    emailIcon: {
-        backgroundColor: 'white',
-        height: 40, 
-        width: 40,
-    },
-    passwordIcon: {
-        backgroundColor: 'white',
-        height: 40, 
-        width: 40,
-    },
-    verifyIcon: {
-        backgroundColor: 'white',
-        height: 40, 
-        width: 40,
+    icon: {
+        height: 2 * (deviceHeight / 43),
+        width: 2 * (deviceHeight / 43), 
     },
     textInputBox: {
-        height: 40,
-        width: 250,
+        height: 2 * (deviceHeight / 40),
+        width: 3 * (deviceWidth / 5),
         borderColor: 'white',
         backgroundColor: 'white',
         borderWidth: 1,
         justifyContent: 'center',
         marginBottom: 20,
     },
+    textInput: {
+        fontSize: deviceWidth / 25,
+        margin: 5,
+    },
     agreeTermContainer: {
-        height: deviceHeight/12,
+        marginHorizontal: 60,
+        marginVertical: 25,
+        marginBottom: 30,
         flexDirection: 'row',
     },
     checkboxContainer: {
         flexDirection: 'row',
-        margin: 20,
     },
     agreeText: {
-        fontSize: 13,
+        fontSize: deviceWidth / 25,
         marginLeft: 10,
-        alignItems: 'center',
     },
     clickableTermText: {
-        fontSize: 13,
+        fontSize: deviceWidth / 25,
         fontWeight: 'bold',
-        marginLeft: 4,
         alignItems: 'center',
     },
     touchableCreateAccountContainer: {
-        height: 2 * (deviceHeight / 14),
         alignItems: 'center',
         justifyContent: 'center',
     },
     touchableCreateAccountButton: {
-        height: 40,
+        height: 50,
         width: 290,
         borderColor: 'white',
         backgroundColor: '#23c0f2',
         borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
         borderColor: '#23c0f2',
-        marginBottom: 40,
+        marginBottom: 2,
+        marginTop: 30
     },
     createAccountText: {
         color: 'white',
-        fontSize: 20,
+        fontSize: deviceWidth / 20,
+        fontWeight: 'bold'
     },
     existingAccountContainer: {
-        height: 2 * (deviceHeight / 12),
         flexDirection: 'row',
         justifyContent: 'center',
     },
     accountQuestionText: {
-        fontSize: 13,
-        marginTop: 10,
+        fontSize: deviceWidth / 28,
+        marginTop: 5,
     },
     loginText: {
         fontWeight: 'bold',
-        fontSize: 13,
-        marginTop: 10,
-        marginLeft: 6,
+        fontSize: deviceWidth / 28,
+        marginTop: 5,
     }
 });
 
