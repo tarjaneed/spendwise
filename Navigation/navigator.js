@@ -7,9 +7,9 @@ import LoginScreen from '../screens/login/LoginScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
 import Dashboardcreen from '../screens/dashboard/DashboardScreen';
 import AddTransactionScreen from '../screens/add-transaction/AddTransactionScreen';
+import TransactionsScreen from '../screens/transactions/TransactionsScreen';
 
 import AuthContext from '../context/AuthContext';
-import TransactionsScreen from '../screens/transactions/TransactionsScreen';
 
 const RootStack = createStackNavigator();
 

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Text, View, Image ,TouchableOpacity} from 'react-native';
+import { Text, View, Image , TouchableOpacity} from 'react-native';
 import { styles } from './Styles';
 
 import AuthContext from '../../context/AuthContext';
