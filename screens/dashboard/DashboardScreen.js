@@ -21,7 +21,7 @@ const Dashboardcreen = ({ navigation }) => {
 
 			<View style={styles.addTransactionBox}>
                 <TouchableOpacity
-                    onPress={() => {navigation.navigate('Transactions')}}
+                    onPress={() => {navigation.navigate('Add Transaction')}}
                     style={
                         styles.addTransactionBox
                     }>

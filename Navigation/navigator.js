@@ -6,9 +6,10 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import LoginScreen from '../screens/login/LoginScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
 import Dashboardcreen from '../screens/dashboard/DashboardScreen';
-import TransactionsScreen from '../screens/transactions/TransactionsScreen';
+import AddTransactionScreen from '../screens/add-transaction/AddTransactionScreen';
 
 import AuthContext from '../context/AuthContext';
+import TransactionsScreen from '../screens/transactions/TransactionsScreen';
 
 const RootStack = createStackNavigator();
 
@@ -54,6 +55,7 @@ const DrawerScreen = () => (
     >
         <Drawer.Screen name="Dashboard" component={Dashboardcreen} />
         <Drawer.Screen name="Transactions" component={TransactionsScreen} />
+        <Drawer.Screen name="Add Transaction" component={AddTransactionScreen} />
     </Drawer.Navigator>
 );
 
