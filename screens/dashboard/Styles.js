@@ -12,18 +12,13 @@ const styles = StyleSheet.create({
     chartAndButton: {
         height: deviceHeight * 0.3,
         justifyContent: 'space-evenly',
+        borderRadius: 15,
+        margin: 15,
+        backgroundColor: 'white',
     },
     dataContainer: {
         height: deviceHeight * 0.5,
         margin: 10,
-    },
-    cardContent: {
-        borderRadius: 10,
-        margin: 8,
-        justifyContent: 'center',
-        marginTop: 10,
-        backgroundColor: '#e0e0e0',
-        height: deviceHeight * 0.055,
     },
     addTransactionBox: {
         borderRadius: 10,
@@ -47,6 +42,7 @@ const styles = StyleSheet.create({
     chartImage: {
         justifyContent: 'center',
         alignItems: 'center',
+
     }
 });
 

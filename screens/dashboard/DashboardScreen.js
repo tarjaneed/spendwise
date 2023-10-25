@@ -1,5 +1,6 @@
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity,Button } from 'react-native';
 import { styles } from './Styles';
+import { dynamicStyles } from '../../components/styles/dynamicStyles';
 
 const Dashboardcreen = ({ navigation }) => {
 
@@ -10,53 +11,56 @@ const Dashboardcreen = ({ navigation }) => {
                 <View style={styles.chartImage}>
                     <Image
                         source={require('../../assets/chart1.png')}
-                        style={{ height: 180, width: 180, backgroundColor: '#f0ffff' }}
+                        style={{ height: 180, width: 210,}}
                     />
                 </View>
 
-                <View style={styles.addTransactionBox}>
-                    <TouchableOpacity
-                        onPress={() => { navigation.navigate('Add Transaction') }}
-                        style={
-                            styles.addTransactionBox
-                        }>
-                        <Text style={[styles.transactionText, { fontSize: 16, fontWeight: 'bold', color: '#fff' }]}>
-                            + ADD TRANSACTION
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+				<View style={[dynamicStyles.addButton]}>
+                <Button
+                    mode="contained"
+                    title="+ ADD TRANSACTION"
+                    color={'white'}
+                    onPress={() => { navigation.navigate('Add Transaction') }}
+                >
+                </Button>
+            </View>
             </View>
 
 
             <View style={styles.dataContainer}>
-                <View style={styles.cardContent}>
+                <View style={dynamicStyles.cardContent}>
                     <Text style={{ ...styles.cardText, color: '#5F9EA0' }}>
                         Gift
                     </Text>
                 </View>
-                <View style={styles.cardContent}>
+                <View style={dynamicStyles.cardContent}>
                     <Text style={{ ...styles.cardText, color: '#6495ED' }}>
                         Education
                     </Text>
                 </View>
-                <View style={styles.cardContent}>
+                <View style={dynamicStyles.cardContent}>
                     <Text style={{ ...styles.cardText, color: '#FF7F50' }}>
                         Food
                     </Text>
                 </View>
-                <View style={styles.cardContent}>
+                <View style={dynamicStyles.cardContent}>
                     <Text style={{ ...styles.cardText, color: '#BDB76B' }}>
                         Travel
                     </Text>
                 </View>
-                <View style={styles.cardContent}>
+                <View style={dynamicStyles.cardContent}>
                     <Text style={{ ...styles.cardText, color: '#9932CC' }}>
                         Fitness
                     </Text>
                 </View>
-                <View style={styles.cardContent}>
+                <View style={dynamicStyles.cardContent}>
                     <Text style={{ ...styles.cardText, color: '#CD5C5C' }}>
                         Health
+                    </Text>
+                </View>
+				<View style={dynamicStyles.cardContent}>
+                    <Text style={{ ...styles.cardText, color: '#20B2AA' }}>
+					Loan
                     </Text>
                 </View>
 
