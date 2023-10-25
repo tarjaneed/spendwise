@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
 import { styles } from './Styles';
+import { dynamicStyles } from '../../components/styles/dynamicStyles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const AddTransactionScreen = ({ navigation }) => {
@@ -105,16 +106,13 @@ const AddTransactionScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.addCategoryBox}>
-                <TouchableOpacity
-                    //onPress={() => navigation.navigate('CategoryScreen')}
-                    style={
-                        styles.addCategoryBox
-                    }>
-                    <Text style={[styles.categoryText, { fontSize: 18, fontWeight: 'bold', color: '#fff' }]}>
-                        + Create
-                    </Text>
-                </TouchableOpacity>
+            <View style={[dynamicStyles.addButton, {backgroundColor: 'grey'}]}>
+                <Button
+                    mode="contained"
+                    title="+ Create"
+                    color={'white'}
+                >
+                </Button>
             </View>
 
             <View style={{ marginHorizontal: 5 }}>
@@ -184,15 +182,13 @@ const AddTransactionScreen = ({ navigation }) => {
                 />
             </View>
 
-            <View style={styles.addButton}>
+            <View style={[dynamicStyles.addButton]}>
                 <Button
                     mode="contained"
                     title="Save"
                     color={'white'}
-                    style={styles.addButton}
                     onPress={() => navigation.navigate('Dashboard')}
                 >
-                       Save
                 </Button>
             </View>
         </View>

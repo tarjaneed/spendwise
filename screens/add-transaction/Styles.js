@@ -37,19 +37,6 @@ const styles = StyleSheet.create({
         width: deviceWidth * 0.22,
         backgroundColor: '#fff',
     },
-    addCategoryBox: {
-        borderRadius: 10,
-        margin: 8,
-        justifyContent: 'center',
-        marginTop: 12,
-        backgroundColor: 'grey',
-    },
-    categoryText: {
-        color: '#000000',
-        textAlign: 'center',
-        paddingVertical: 5,
-        fontWeight: 'bold'
-    },
     textContainer: {
         alignItems: 'center',
         paddingVertical: 8,
@@ -67,15 +54,6 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingVertical: 16,
         fontSize: deviceHeight * 0.018,
-    },
-    addButton: {
-        borderRadius: 10,
-        marginHorizontal: 8,
-        marginVertical: 12,
-        justifyContent: 'center',
-        padding: 5,
-        backgroundColor: '#23c0f2',
-        fontWeight: 'bold'
     },
     categoryItems: {
         flexDirection: 'row',
