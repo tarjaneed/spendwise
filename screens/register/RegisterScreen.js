@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import CheckBox from 'expo-checkbox';
+import { styles } from './Styles';
 
-import { styles } from './Styles'; 
+import AuthContext from '../../context/AuthContext';
 
 const RegisterScreen = ({ navigation }) => {
 
+  const { name, setName, register, username, setUsername, error, setError } = useContext(AuthContext);
+
 	const [isSelected, setSelection] = useState(false);
-	const [name, setName] = useState('');
-	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [verifyPassword, setVerifyPassword] = useState('');
-	
+
+  const handleVerifyPassword = (verifyPassword) => {
+    if(verifyPassword !== password) {
+      setError('Password not matching.')
+    } else setError('')
+    setVerifyPassword(verifyPassword)
+  }
 	return (
 		<View style={styles.container}>
 			<View style={styles.infoContainer}>
@@ -25,10 +32,10 @@ const RegisterScreen = ({ navigation }) => {
 							/>
 						</View>
 						<View style={styles.textInputBox}>
-							<TextInput 
+							<TextInput
 								placeholder='Enter Full Name'
 								style={styles.textInput}
-								onChangeText={(name)=> setName({name})}
+								onChangeText={(name)=> setName(name)}
 								value={name}
 							/>
 						</View>
@@ -45,7 +52,7 @@ const RegisterScreen = ({ navigation }) => {
 							<TextInput 
 								placeholder='Enter Username'
 								style={styles.textInput}
-								onChangeText={(username)=> setUsername({username})}
+								onChangeText={(username)=> setUsername(username)}
 								value={username}
 							/>
 						</View>
@@ -59,10 +66,10 @@ const RegisterScreen = ({ navigation }) => {
 							/>
 						</View>
 						<View style={styles.textInputBox}>
-							<TextInput 
+							<TextInput
 								placeholder='Enter Email Address'
 								style={styles.textInput}
-								onChangeText={(email)=> setEmail({email})}
+								onChangeText={(email)=> setEmail(email)}
 								value={email}
 							/>
 						</View>
@@ -76,10 +83,10 @@ const RegisterScreen = ({ navigation }) => {
 							/>
 						</View>
 						<View style={styles.textInputBox}>
-							<TextInput 
+							<TextInput
 								placeholder='Enter Password'
 								style={styles.textInput}
-								onChangeText={(password)=> setPassword({password})}
+								onChangeText={(password)=> setPassword(password)}
 								value={password}
 								secureTextEntry={true}
 							/>
@@ -94,10 +101,10 @@ const RegisterScreen = ({ navigation }) => {
 							/>
 						</View>
 						<View style={styles.textInputBox}>
-							<TextInput 
+							<TextInput
 								placeholder='Confirm Password'
 								style={styles.textInput}
-								onChangeText={(verifyPassword)=> setVerifyPassword({verifyPassword})}
+								onChangeText={handleVerifyPassword}
 								value={verifyPassword}
 								secureTextEntry={true}
 							/>
@@ -120,7 +127,7 @@ const RegisterScreen = ({ navigation }) => {
 						>
 							<View style={{flexDirection: 'row'}}>
 								<Text style={styles.agreeText}>
-									Agree with 
+									Agree with
 								</Text>
 								<Text style={styles.clickableTermText}>
 									&nbsp;Term & Conditions
@@ -130,9 +137,11 @@ const RegisterScreen = ({ navigation }) => {
 					</View>
 			</View>
 
+      {error && <Text style={{color: 'red', textAlign: 'center'}}>{error}</Text>}
+
 			<TouchableOpacity
 				onPress={() => {
-					navigation.navigate('SignIn')
+					register(email, password, navigation)
 				}}
 				style={styles.touchableCreateAccountContainer}
 			>
@@ -156,7 +165,7 @@ const RegisterScreen = ({ navigation }) => {
 						&nbsp;Login
 					</Text>
 				</TouchableOpacity>
-			</View>	
+			</View>
 
 		</View>
 	);

@@ -6,7 +6,7 @@ import AuthContext from '../../context/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
 
-    const { signIn } = useContext(AuthContext);
+    const { signIn, error } = useContext(AuthContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -31,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
                         <TextInput
                             style={styles.textInput}
                             placeholder='Enter Username'
-                            onChangeText={(username) => setUsername({ username })}
+                            onChangeText={(username) => setUsername(username)}
                             value={username}
                         />
                     </View>
@@ -49,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
                         <TextInput
                             style={styles.textInput}
                             placeholder='Enter Password'
-                            onChangeText={(password) => setPassword({ password })}
+                            onChangeText={(password) => setPassword(password)}
                             value={password}
                             secureTextEntry={true}
                         />
@@ -57,9 +57,11 @@ const LoginScreen = ({ navigation }) => {
 
                 </View>
 
+                {error && <Text style={{color: 'red'}}>{error}</Text>}
+
                 <TouchableOpacity
                     onPress={() => {
-                        signIn(); // From Context
+                        signIn(username, password); // From Context
                     }}
                     style={styles.touchableSignInButton}
                 >
