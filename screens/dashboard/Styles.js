@@ -42,8 +42,24 @@ const styles = StyleSheet.create({
     chartImage: {
         justifyContent: 'center',
         alignItems: 'center',
-
-    }
+    },
+    cardContent: {
+        borderRadius: 10,
+        margin: 8,
+        justifyContent: 'center',
+        marginTop: 8,
+        backgroundColor: '#e0e0e0',
+        height: deviceHeight * 0.055,
+    },
+    addButton: {
+        borderRadius: 10,
+        marginHorizontal: 8,
+        marginVertical: 12,
+        justifyContent: 'center',
+        padding: 8,
+        backgroundColor: '#23c0f2',
+        fontWeight: 'bold'
+    },
 });
 
 export { styles };

@@ -60,6 +60,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    categoryText: {
+        textAlign: 'center',
+    },
     dateContainer: {
         marginTop: 5,
         marginHorizontal: 10,
@@ -81,6 +84,15 @@ const styles = StyleSheet.create({
     calendarIcon: {
         paddingVertical: 18,
         marginRight: 5,
+    },
+    addButton: {
+        borderRadius: 10,
+        marginHorizontal: 8,
+        marginVertical: 12,
+        justifyContent: 'center',
+        padding: 5,
+        backgroundColor: '#23c0f2',
+        fontWeight: 'bold'
     },
 });
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
-import { styles } from './Styles';
-import { dynamicStyles } from '../../components/styles/dynamicStyles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+import { styles } from './Styles';
 
 const AddTransactionScreen = ({ navigation }) => {
 
@@ -33,7 +33,6 @@ const AddTransactionScreen = ({ navigation }) => {
                     Categories
                 </Text>
             </View>
-            
 
             <View style={styles.categoryItems}>
                 <TouchableOpacity
@@ -106,7 +105,7 @@ const AddTransactionScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={[dynamicStyles.addButton, {backgroundColor: 'grey'}]}>
+            <View style={[styles.addButton, { backgroundColor: 'grey' }]}>
                 <Button
                     mode="contained"
                     title="+ Create"
@@ -182,7 +181,7 @@ const AddTransactionScreen = ({ navigation }) => {
                 />
             </View>
 
-            <View style={[dynamicStyles.addButton]}>
+            <View style={styles.addButton}>
                 <Button
                     mode="contained"
                     title="Save"
