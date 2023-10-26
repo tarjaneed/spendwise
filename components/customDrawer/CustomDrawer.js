@@ -9,7 +9,7 @@ import AuthContext from '../../context/AuthContext';
 import { styles } from './Styles';
 
 const CustomDrawerComponent = (props) => {
-    const { signOut } = useContext(AuthContext);
+    const { signOut, name } = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
@@ -26,7 +26,7 @@ const CustomDrawerComponent = (props) => {
                         style={styles.userImage}
                     />
                     <Text style={styles.userName}>
-                        John Doe
+                        {name || 'John Doe'}
                     </Text>
                 </ImageBackground>
 
