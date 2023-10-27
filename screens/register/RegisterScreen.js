@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import { styles } from './Styles';
@@ -7,11 +7,9 @@ import AuthContext from '../../context/AuthContext';
 
 const RegisterScreen = ({ navigation }) => {
 
-  const { name, setName, register, username, setUsername, error, setError } = useContext(AuthContext);
+  const { email, setEmail, password, setPassword, name, setName, register, username, setUsername, error, setError, reset } = useContext(AuthContext);
 
 	const [isSelected, setSelection] = useState(false);
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const [verifyPassword, setVerifyPassword] = useState('');
 
   const handleVerifyPassword = (verifyPassword) => {
@@ -20,6 +18,11 @@ const RegisterScreen = ({ navigation }) => {
     } else setError('')
     setVerifyPassword(verifyPassword)
   }
+
+  useEffect(() => {
+    reset()
+  }, [])
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.infoContainer}>
