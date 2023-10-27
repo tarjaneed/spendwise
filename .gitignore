@@ -6,3 +6,4 @@ yarn-error.log
 # Firebase .env file
 .env
 
+.DS_Store
