@@ -7,6 +7,7 @@ import { styles } from './Styles';
 const AddTransactionScreen = ({ navigation }) => {
 
     const [amount, setAmount] = useState('');
+    const [comment, setComment] = useState('');
 
     const handleTextChange = (text) => {
         if (!text.startsWith('$')) {
@@ -27,7 +28,7 @@ const AddTransactionScreen = ({ navigation }) => {
                     onChangeText={handleTextChange}
                 />
             </View>
-            
+
             <View style={{ marginHorizontal: 5 }}>
                 <Text style={styles.heading}>
                     Categories
@@ -178,6 +179,8 @@ const AddTransactionScreen = ({ navigation }) => {
                 <TextInput
                     style={styles.note}
                     placeholder="Comment"
+                    value={comment}
+                    onChangeText={(value) => setComment(value)}
                 />
             </View>
 
@@ -186,7 +189,11 @@ const AddTransactionScreen = ({ navigation }) => {
                     mode="contained"
                     title="Save"
                     color={'white'}
-                    onPress={() => navigation.navigate('Dashboard')}
+                    onPress={() => {
+                      setComment('');
+                      setAmount('');
+                      navigation.navigate('Dashboard');
+                    }}
                 >
                 </Button>
             </View>
