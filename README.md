@@ -102,15 +102,92 @@ Now, let's get Spendwise up and running on your local machine. Follow these step
 
 This will load Spendwise on your phone, allowing you to interact with the app on your mobile device.
 
-## Features
+Certainly, let me provide a simplified guide on creating a general component, a styles file, importing the styles, and using them in JSX. You can then adapt this process for your specific component.
 
-Spendwise offers a range of features to help you manage your expenses effectively:
+**Creating a General Component:**
 
-- **Expense Input**: Easily input your expenses, specifying the amount, description, and category.
-- **Category Management**: Create new expense categories on the fly, allowing you to organize your spending efficiently.
-- **Expense Breakdown**: Gain insights into your spending habits with an expense breakdown by category.
-- **Interactive Pie Chart**: Visualize your expenses through an interactive pie chart, making it easy to identify where you are spending the most.
-- **Authentication Flow using Context**: Implement a secure and seamless user authentication flow in your app with the help of context, ensuring that user data and interactions are protected.
+1. Create a new JavaScript file for your component, for example, `MyComponent.js`.
+
+   ```bash
+   touch MyComponent.js
+   ```
+
+2. Define your component within `MyComponent.js`. For example:
+
+```javascript
+import React from 'react';
+import { View, Text } from 'react-native';
+
+const MyComponent = () => {
+  return (
+    <View>
+      <Text>This is my custom component.</Text>
+    </View>
+  );
+};
+
+export default MyComponent;
+```
+
+**Creating a Styles File:**
+
+1. Create a new JavaScript file for your styles, for example, `MyComponentStyles.js`.
+
+   ```bash
+   touch MyComponentStyles.js
+   ```
+
+2. Open `MyComponentStyles.js` and define your component styles using the `StyleSheet` module:
+
+```javascript
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'lightblue',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
+```
+
+**Using the Component and Styles in a JSX File (e.g., `App.js`):**
+
+1. Import the `MyComponent` and its styles at the top of your JSX file (e.g., `App.js`):
+
+```javascript
+import MyComponent from './MyComponent';
+import { styles } from './MyComponentStyles';
+```
+
+2. Use the `MyComponent` within your JSX content, and apply the styles as needed:
+
+```javascript
+import React from 'react';
+import { View, Text } from 'react-native';
+import { styles } from './MyComponentStyles';
+import MyComponent from './MyComponent';
+
+const App = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Welcome to My App</Text>
+      <MyComponent />
+    </View>
+  );
+};
+
+export default App;
+```
+
+In this simplified example, `MyComponent` is created and styled separately in its own files. Then, it is imported and used within the `App.js` file, applying the defined styles to the component.
+
+You can follow a similar approach for creating components, styles, and using them in your app.
 
 ## Support
 
