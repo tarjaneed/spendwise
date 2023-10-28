@@ -1,17 +1,38 @@
-# Spendwise - An Expense Tracker Native App
+# Spendwise - An Intuitive Expense Tracker Native App
 
-Spendwise is an intuitive and user-friendly Expense Tracker app designed to help you keep track of your expenses. Whether you want to monitor your daily spending, budget for upcoming expenses, or simply gain insight into your financial habits, Spendwise has you covered. With its versatile design, you can easily input and categorize your expenses, create new spending categories on the fly, and visualize your expenses through an interactive pie chart.
+Welcome to Spendwise, an intuitive and user-friendly Expense Tracker app designed to help you gain control of your finances. Whether you want to keep track of your daily spending, budget for upcoming expenses, or simply gain insights into your financial habits, Spendwise has you covered. This README will guide you through setting up and using Spendwise to manage your expenses effectively.
 
-## Requirements
+## Prerequisites
 
-To get started with Spendwise, make sure you have the following dependencies installed:
+Before you get started with Spendwise, make sure you have the following dependencies installed on your system:
 
-- [expo-cli](https://docs.expo.dev/workflow/expo-cli/): 6.3.10
-- [Node.js](https://nodejs.org/): 18.18.2
+### 1. Expo CLI
+
+Expo CLI is a critical tool for developing and running React Native applications. If you don't already have it, you can install it with the following steps:
+
+- First, ensure you have Node.js installed. If you don't have it, follow the next step.
+  
+  **Node.js**: Download and install Node.js, which includes npm (Node Package Manager). You can download it from the official website: [Node.js](https://nodejs.org/). Make sure you have at least Node.js version 14 or higher.
+
+- Once Node.js is installed, open your terminal or command prompt and run the following command to install Expo CLI:
+
+  ```bash
+  npm install -g expo-cli
+  ```
+
+### 2. Node.js
+
+Node.js is a JavaScript runtime that is required for running the Expo CLI and the project itself. Make sure you have Node.js installed with at least version 14 or higher. If you don't have Node.js installed, you can download it from the official website: [Node.js](https://nodejs.org/).
 
 ## Configuring Firebase
 
-To use Firebase with Spendwise, you need to configure Firebase with your own API keys. Update the `firebaseConfig` object in your code with your Firebase project's configuration:
+To use Firebase with Spendwise, you need to configure it with your own API keys. Follow these steps to set up Firebase:
+
+1. Create a Firebase project on the [Firebase Console](https://console.firebase.google.com/).
+
+2. Once your project is created, obtain the configuration values required for Spendwise. These include the `apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId`, and `measurementId`.
+
+3. Update the `firebaseConfig` object in your code with your Firebase project's configuration. Open the file `config.js` in your project and replace the placeholder values with your Firebase project's actual configuration.
 
 ```javascript
 const firebaseConfig = {
@@ -25,11 +46,9 @@ const firebaseConfig = {
 };
 ```
 
-Replace `"YOUR_API_KEY"`, `"YOUR_AUTH_DOMAIN"`, `"YOUR_PROJECT_ID"`, `"YOUR_STORAGE_BUCKET"`, `"YOUR_MESSAGING_SENDER_ID"`, `"YOUR_APP_ID"`, and `"YOUR_MEASUREMENT_ID"` with your Firebase project's actual configuration values.
-
 ## Getting Started
 
-Follow these steps to set up and run Spendwise on your local machine:
+Now, let's get Spendwise up and running on your local machine. Follow these steps:
 
 1. **Clone the Repository**: Start by cloning the Spendwise repository to your local system.
 
@@ -85,8 +104,10 @@ This will load Spendwise on your phone, allowing you to interact with the app on
 
 ## Features
 
+Spendwise offers a range of features to help you manage your expenses effectively:
+
 - **Expense Input**: Easily input your expenses, specifying the amount, description, and category.
-- **Category Management**: Create new expense categories if they do not exist, allowing you to organize your spending efficiently.
+- **Category Management**: Create new expense categories on the fly, allowing you to organize your spending efficiently.
 - **Expense Breakdown**: Gain insights into your spending habits with an expense breakdown by category.
 - **Interactive Pie Chart**: Visualize your expenses through an interactive pie chart, making it easy to identify where you are spending the most.
 - **Authentication Flow using Context**: Implement a secure and seamless user authentication flow in your app with the help of context, ensuring that user data and interactions are protected.
