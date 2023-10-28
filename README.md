@@ -34,7 +34,7 @@ Follow these steps to set up and run Spendwise on your local machine:
 1. **Clone the Repository**: Start by cloning the Spendwise repository to your local system.
 
    ```bash
-   git clone https://github.com/your-username/spendwise.git
+   git clone https://github.com/tarjaneed/spendwise.git
    ```
 
 2. **Navigate to the Project Directory**: Change your working directory to the Spendwise project folder.
