@@ -2,7 +2,7 @@ import { Text, View, Image, Button } from 'react-native';
 
 import { styles } from './Styles';
 
-const Dashboardcreen = ({ navigation }) => {
+const DashboardScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
@@ -68,4 +68,4 @@ const Dashboardcreen = ({ navigation }) => {
 };
 
 
-export default Dashboardcreen;
+export default DashboardScreen;
