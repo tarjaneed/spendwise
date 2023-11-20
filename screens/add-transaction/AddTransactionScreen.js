@@ -108,6 +108,7 @@ const AddTransactionScreen = ({ navigation }) => {
 
             <View style={[styles.addButton, { backgroundColor: 'grey' }]}>
                 <Button
+                onPress={() => { navigation.navigate('Categories') }}
                     mode="contained"
                     title="+ Create"
                     color={'white'}

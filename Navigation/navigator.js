@@ -8,8 +8,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import LoginScreen from '../screens/login/LoginScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
-import Dashboardcreen from '../screens/dashboard/DashboardScreen';
+import DashboardScreen from '../screens/dashboard/DashboardScreen';
 import AddTransactionScreen from '../screens/add-transaction/AddTransactionScreen';
+import AddCategoryScreen from '../screens/add-category/AddCategoryScreen';
 import TransactionsScreen from '../screens/transactions/TransactionsScreen';
 
 import CustomDrawerComponent from '../components/customDrawer/CustomDrawer';
@@ -71,7 +72,7 @@ const DrawerScreen = () => (
     >
         <Drawer.Screen
             name="Dashboard" 
-            component={Dashboardcreen} 
+            component={DashboardScreen} 
             options={{
                 drawerIcon: ({ focused }) => <Ionicons name="home" size={27} color={focused ? 'white' : '#333'} />
             }}
@@ -88,6 +89,13 @@ const DrawerScreen = () => (
             component={AddTransactionScreen} 
             options={{
                 drawerIcon: ({ focused }) => <Ionicons name="add-circle-sharp" size={27} color={focused ? 'white' : '#333'} />
+            }}
+        />
+        <Drawer.Screen 
+            name="Categories" 
+            component={AddCategoryScreen} 
+            options={{
+                drawerIcon: ({ focused }) => <Ionicons name="grid-outline" size={27} color={focused ? 'white' : '#333'} />
             }}
         />
     </Drawer.Navigator>
