@@ -1,62 +1,50 @@
 import { Text, View, TouchableOpacity, FlatList,landscape} from 'react-native';
+import { useEffect, useState } from 'react';
 import { styles } from './Styles';
 import moment from 'moment';
 
-const TransactionsScreen = ({ navigation }) => {
-	const transactions = [
-		{
-			id: '1',
-			transactionDate: '2023-11-01',
-			categoryName: 'Groceries',
-			note: 'Weekly groceries shopping',
-			amount: 50.25,
-		  },
-		  {
-			id: '2',
-			transactionDate: '2023-11-05',
-			categoryName: 'Transportation',
-			note: 'Uber ride',
-			amount: 15.50,
-		  },
-		  {
-			id: '3',
-			transactionDate: '2023-11-10',
-			categoryName: 'Dining',
-			note: 'Dinner at a restaurant',
-			amount: 35.75,
-		  },
-		  {
-			id: '4',
-			transactionDate: '2023-11-15',
-			categoryName: 'Entertainment',
-			note: 'Movie tickets',
-			amount: 20.00,
-		  },
-		  {
-			id: '5',
-			transactionDate: '2023-11-20',
-			categoryName: 'Utilities',
-			note: 'Electricity bill payment',
-			amount: 75.00,
-		  },
-		  {
-			id: '6',
-			transactionDate: '2023-11-25',
-			categoryName: 'Shopping',
-			note: 'Clothing purchase',
-			amount: 45.50,
-		  },
-      ];
+import { db } from '../../firebase';
+import { collection, query, onSnapshot } from 'firebase/firestore';
+
+const TransactionsScreen = ({  }) => {
+
+	const [loading, setLoading] = useState(false);
+	const [transactions, setTransactions] = useState([]);
+
+	// Lists transactions
+    useEffect(() => {
+        const q = query(collection(db, 'transactions'));
+        const unsub = onSnapshot(q, (querySnapshot) => {
+            let transactions = [];
+            querySnapshot.forEach((doc) => {
+                transactions.push({ ...doc.data(), id: doc.id });
+            });
+
+           setTransactions(transactions);
+            setLoading(false);
+        });
+
+        // Unsubscribe from events when no longer in use
+        return () => unsub();
+    }, []);
+
+
+	const sortTransactions = property => {
+		const sortedData = [...transactions].sort(
+		  (a, b) => b[property] - a[property],
+		);
+		setTransactions(sortedData);
+	  };
 
 	  const renderItem = ({item}) => (
-		<TouchableOpacity /* onPress={() => setModalItem(item)} */ style={styles.card}>
+		<TouchableOpacity  onPress={() => setModalItem(item)} style={styles.card}>
 		  <View style={styles.cardDate}>
 			<View>
 			  <Text style={styles.text}>
-				{moment(new Date(item.transactionDate)).format('DD')}
+				{moment(new Date(item.date)).format('DD')}
 			  </Text>
 			  <Text style={styles.text}>
-				{moment(new Date(item.transactionDate)).format('MMM')}
+				{moment(new Date(item.date)).format('MMM')}
 			  </Text>
 			</View>
 			<View style={styles.divider} />
@@ -64,7 +52,7 @@ const TransactionsScreen = ({ navigation }) => {
 		  <View style={styles.cardText}>
 			<Text style={styles.text}>{item.categoryName}</Text>
 			<Text style={{color: 'grey'}}>
-			  {item.note === '' ? 'N/A' : item.note}
+			  {item.note === '' ? 'N/A' : item.notes}
 			</Text>
 		  </View>
 		  <View style={styles.cardAmount}>
@@ -76,7 +64,12 @@ const TransactionsScreen = ({ navigation }) => {
 		</TouchableOpacity>
 	  );	
 
-	return (
+	  if (loading) {
+        return (
+            <ActivityIndicator style={styles.loader} size={'large'} />
+        );
+    } else {
+        return (
 		<View style={{flex: 1}}>
 			 <View style={[styles.dataContainer, landscape && {flex: 3}]}>
                 <FlatList
@@ -86,22 +79,23 @@ const TransactionsScreen = ({ navigation }) => {
                 />
               </View>
 
-			  <View style={[styles.footer, landscape && {flex: 1}]}>
+			 <View style={[styles.footer, landscape && {flex: 1}]}>
                 <TouchableOpacity
                   style={[styles.sortButtons, styles.buttonDivider]}
-                //  onPress={() => sortTransactions('transactionDate')}
+                  onPress={() => sortTransactions('date')}
 				>
                   <Text style={styles.footerText}>Sort by Date</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.sortButtons}
-                //  onPress={() => sortTransactions('amount')}
+                  onPress={() => sortTransactions('amount')}
 				  >
                   <Text style={styles.footerText}>Sort by Amount</Text>
                 </TouchableOpacity>
               </View>
 		</View>
 	);
+		}
 };
   
 
