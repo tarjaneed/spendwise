@@ -37,7 +37,7 @@ const TransactionsScreen = ({  }) => {
 	  };
 
 	  const renderItem = ({item}) => (
-		<TouchableOpacity  onPress={() => setModalItem(item)} style={styles.card}>
+		<TouchableOpacity style={styles.card}>
 		  <View style={styles.cardDate}>
 			<View>
 			  <Text style={styles.text}>
