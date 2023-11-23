@@ -37,7 +37,6 @@ const DashboardScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.chartAndButton}>
-
                 <View style={styles.chartImage}>
                     <Image
                         source={require('../../assets/chart1.png')}
