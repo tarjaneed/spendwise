@@ -55,13 +55,9 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         fontSize: deviceHeight * 0.018,
     },
-    categoryItems: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     categoryText: {
         textAlign: 'center',
+        fontWeight: 'bold'
     },
     dateContainer: {
         marginTop: 5,

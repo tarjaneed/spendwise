@@ -1,8 +1,38 @@
-import { Text, View, Image, Button } from 'react-native';
+import {FlatList, View, Image, Button,TouchableOpacity, Text, RefreshControl } from 'react-native';
+import { useEffect, useState } from 'react';
 
+import { collection, query, onSnapshot } from 'firebase/firestore';
+import { db } from '../../firebase';
 import { styles } from './Styles';
 
 const DashboardScreen = ({ navigation }) => {
+
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+
+     // Lists Categories
+     useEffect(() => {
+        const q = query(collection(db, 'categories'));
+        const unsub = onSnapshot(q, (querySnapshot) => {
+            let categories = [];
+            querySnapshot.forEach((doc) => {
+                categories.push({ ...doc.data(), id: doc.id });
+            });
+
+            setCategories(categories);
+            setLoading(false);
+        });
+
+        // Unsubscribe from events when no longer in use
+        return () => unsub();
+    }, []);
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        reload();
+        setRefreshing(false);
+      };
 
     return (
         <View style={styles.container}>
@@ -27,42 +57,31 @@ const DashboardScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.dataContainer}>
-                <View style={styles.cardContent}>
-                    <Text style={{ ...styles.cardText, color: '#5F9EA0' }}>
-                        Gift
-                    </Text>
+        <FlatList
+          data={categories}
+          keyExtractor={item => item.id}
+          refreshControl={
+         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+         }
+          renderItem={({item}) => (
+           // <TouchableOpacity onPress={() => handleCategoryPress(item)}>
+           <TouchableOpacity>
+            <View style={styles.card}>
+                <View style={styles.content}>
+                     <View style={styles.leftContent}>
+          <View style={[styles.color, {backgroundColor: item.color}]} />
+          <Text style={styles.text}>{item.name}</Text>
+                   </View>
+               <View style={styles.rightContent}>
+                <Text style={styles.text}>10 %</Text>
+                <Text style={styles.text}>$ 550</Text>
+              </View>
+                 </View>
                 </View>
-                <View style={styles.cardContent}>
-                    <Text style={{ ...styles.cardText, color: '#6495ED' }}>
-                        Education
-                    </Text>
-                </View>
-                <View style={styles.cardContent}>
-                    <Text style={{ ...styles.cardText, color: '#FF7F50' }}>
-                        Food
-                    </Text>
-                </View>
-                <View style={styles.cardContent}>
-                    <Text style={{ ...styles.cardText, color: '#BDB76B' }}>
-                        Travel
-                    </Text>
-                </View>
-                <View style={styles.cardContent}>
-                    <Text style={{ ...styles.cardText, color: '#9932CC' }}>
-                        Fitness
-                    </Text>
-                </View>
-                <View style={styles.cardContent}>
-                    <Text style={{ ...styles.cardText, color: '#CD5C5C' }}>
-                        Health
-                    </Text>
-                </View>
-                <View style={styles.cardContent}>
-                    <Text style={{ ...styles.cardText, color: '#20B2AA' }}>
-                        Loan
-                    </Text>
-                </View>
-            </View>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
         </View>
     );
 };
