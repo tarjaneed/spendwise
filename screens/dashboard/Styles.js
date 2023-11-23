@@ -54,12 +54,49 @@ const styles = StyleSheet.create({
     addButton: {
         borderRadius: 10,
         marginHorizontal: 8,
-        marginVertical: 12,
+        marginVertical: 10,
         justifyContent: 'center',
-        padding: 8,
+        padding: 6,
         backgroundColor: '#23c0f2',
         fontWeight: 'bold'
     },
+    card: {
+        marginVertical: 5,
+        borderRadius: 8,
+        backgroundColor: '#fff',
+        shadowOffset: {width: 1, height: 1},
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        shadowColor: 'black',
+      },
+      content: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 15,
+      },
+      leftContent: {
+        flex: 4,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+      },
+      rightContent: {
+        flex: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
+      color: {
+        marginRight: 10,
+        width: 18,
+        height: 18,
+        borderRadius: 18 / 2,
+      },
+      text: {
+        fontWeight: 'bold'
+      }
 });
 
 export { styles };

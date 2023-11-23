@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, TextInput, TouchableOpacity, Button, FlatList } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+import { collection, query, onSnapshot} from 'firebase/firestore';
+
+import { db } from '../../firebase';
 
 import { styles } from './Styles';
 
@@ -8,6 +12,8 @@ const AddTransactionScreen = ({ navigation }) => {
 
     const [amount, setAmount] = useState('');
     const [comment, setComment] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleTextChange = (text) => {
         if (!text.startsWith('$')) {
@@ -15,6 +21,36 @@ const AddTransactionScreen = ({ navigation }) => {
         }
         setAmount(text);
     };
+
+    // Lists Categories
+    useEffect(() => {
+        const q = query(collection(db, 'categories'));
+        const unsub = onSnapshot(q, (querySnapshot) => {
+            let categories = [];
+            querySnapshot.forEach((doc) => {
+                categories.push({ ...doc.data(), id: doc.id });
+            });
+
+            setCategories(categories);
+            setLoading(false);
+        });
+
+        // Unsubscribe from events when no longer in use
+        return () => unsub();
+    }, []);
+
+    const renderItem = ({ item }) => (
+        <View style={{ marginLeft: 5 }}>
+           <TouchableOpacity
+                    onPress={() => alert(item.name)}
+                    style={[styles.categoryBox, { borderColor: item.color }]}>
+                    <Text style={{ ...styles.categoryText, color: item.color }}>
+                        {item.name}
+                    </Text>
+                </TouchableOpacity>
+        </View>   
+    );
+
 
     return (
         <View style={styles.container}>
@@ -34,78 +70,14 @@ const AddTransactionScreen = ({ navigation }) => {
                     Categories
                 </Text>
             </View>
-
-            <View style={styles.categoryItems}>
-                <TouchableOpacity
-                    onPress={() => alert('Gift')}
-                    style={[ styles.categoryBox ]}>
-
-                    <Text style={{ ...styles.categoryText, color: '#5F9EA0' }}>
-                        Gift
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => alert('Education')}
-                    style={[ styles.categoryBox ]}>
-
-                    <Text style={{ ...styles.categoryText, color: '#6495ED' }}>
-                        Education
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => alert('Food')}
-                    style={[ styles.categoryBox ]}>
-
-                    <Text style={{ ...styles.categoryText, color: '#FF7F50' }}>
-                        Food
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => alert('Travel')}
-                    style={[ styles.categoryBox ]}>
-
-                <Text style={{ ...styles.categoryText, color: '#BDB76B' }}> 
-                        Travel
-                    </Text>
-                </TouchableOpacity>
-
-            </View>
-
-            <View style={styles.categoryItems}>
-                <TouchableOpacity
-                    onPress={() => alert('Fitness')}
-                    style={[ styles.categoryBox ]}>
-
-<                   Text style={{ ...styles.categoryText, color: '#9932CC' }}>
-                        Fitness
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => alert('Health')}
-                    style={[ styles.categoryBox ]}>
-
-                    <Text style={{ ...styles.categoryText, color: '#CD5C5C' }}>
-                        Health
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => alert('Loan')}
-                    style={[ styles.categoryBox ]}>
-
-                    <Text style={{ ...styles.categoryText, color: '#20B2AA' }}>
-                        Loan
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => alert('Utilities')}
-                    style={[ styles.categoryBox ]}>
-
-                    <Text style={{ ...styles.categoryText, color: '#90EE90' }}>
-                        Utilities
-                    </Text>
-                </TouchableOpacity>
-            </View>
-
+            <View>
+            <FlatList
+                    numColumns={4}
+                    data={categories}
+                    keyExtractor={item => item.id}
+                    renderItem={renderItem}
+                />
+                </View>
             <View style={[styles.addButton, { backgroundColor: 'grey' }]}>
                 <Button
                 onPress={() => { navigation.navigate('Categories') }}
