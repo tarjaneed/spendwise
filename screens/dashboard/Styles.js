@@ -64,39 +64,39 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         borderRadius: 8,
         backgroundColor: '#fff',
-        shadowOffset: {width: 1, height: 1},
+        shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.5,
         shadowRadius: 2,
         shadowColor: 'black',
-      },
-      content: {
+    },
+    content: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 12,
         paddingHorizontal: 15,
-      },
-      leftContent: {
+    },
+    leftContent: {
         flex: 4,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-      },
-      rightContent: {
+    },
+    rightContent: {
         flex: 2,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-      },
-      color: {
+    },
+    color: {
         marginRight: 10,
         width: 18,
         height: 18,
         borderRadius: 18 / 2,
-      },
-      text: {
+    },
+    text: {
         fontWeight: 'bold'
-      }
+    }
 });
 
 export { styles };

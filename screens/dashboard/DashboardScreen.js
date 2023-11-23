@@ -1,4 +1,4 @@
-import {FlatList, View, Image, Button,TouchableOpacity, Text, RefreshControl } from 'react-native';
+import { FlatList, View, Image, Button, TouchableOpacity, Text, RefreshControl } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { collection, query, onSnapshot } from 'firebase/firestore';
@@ -11,8 +11,8 @@ const DashboardScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
-     // Lists Categories
-     useEffect(() => {
+    // Lists Categories
+    useEffect(() => {
         const q = query(collection(db, 'categories'));
         const unsub = onSnapshot(q, (querySnapshot) => {
             let categories = [];
@@ -32,7 +32,7 @@ const DashboardScreen = ({ navigation }) => {
         setRefreshing(true);
         reload();
         setRefreshing(false);
-      };
+    };
 
     return (
         <View style={styles.container}>
@@ -57,31 +57,31 @@ const DashboardScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.dataContainer}>
-        <FlatList
-          data={categories}
-          keyExtractor={item => item.id}
-          refreshControl={
-         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-         }
-          renderItem={({item}) => (
-           // <TouchableOpacity onPress={() => handleCategoryPress(item)}>
-           <TouchableOpacity>
-            <View style={styles.card}>
-                <View style={styles.content}>
-                     <View style={styles.leftContent}>
-          <View style={[styles.color, {backgroundColor: item.color}]} />
-          <Text style={styles.text}>{item.name}</Text>
-                   </View>
-               <View style={styles.rightContent}>
-                <Text style={styles.text}>10 %</Text>
-                <Text style={styles.text}>$ 550</Text>
-              </View>
-                 </View>
-                </View>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+                <FlatList
+                    data={categories}
+                    keyExtractor={item => item.id}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
+                    renderItem={({ item }) => (
+                        // <TouchableOpacity onPress={() => handleCategoryPress(item)}>
+                        <TouchableOpacity>
+                            <View style={styles.card}>
+                                <View style={styles.content}>
+                                    <View style={styles.leftContent}>
+                                        <View style={[styles.color, { backgroundColor: item.color }]} />
+                                        <Text style={styles.text}>{item.name}</Text>
+                                    </View>
+                                    <View style={styles.rightContent}>
+                                        <Text style={styles.text}>10 %</Text>
+                                        <Text style={styles.text}>$ 550</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                />
+            </View>
         </View>
     );
 };
