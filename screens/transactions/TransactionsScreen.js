@@ -47,7 +47,7 @@ const TransactionsScreen = ({ }) => {
 				<View style={styles.divider} />
 			</View>
 			<View style={styles.cardText}>
-				<Text style={styles.text}>{item.categoryName}</Text>
+				<Text style={styles.text}>{item.category.name}</Text>
 				<Text style={{ color: 'grey' }}>
 					{item.note === '' ? 'N/A' : item.notes}
 				</Text>

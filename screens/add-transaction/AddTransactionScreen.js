@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Button, FlatList } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Button, FlatList, ActivityIndicator, Alert } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import moment from 'moment';
 
-import { collection, query, onSnapshot} from 'firebase/firestore';
+import { collection, addDoc, query, onSnapshot, doc } from 'firebase/firestore';
 
 import { db } from '../../firebase';
 
@@ -12,6 +13,8 @@ const AddTransactionScreen = ({ navigation }) => {
 
     const [amount, setAmount] = useState('');
     const [comment, setComment] = useState('');
+    const [category, setCategory] = useState(null);
+    const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'));
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -41,16 +44,46 @@ const AddTransactionScreen = ({ navigation }) => {
 
     const renderItem = ({ item }) => (
         <View style={{ marginLeft: 5 }}>
-           <TouchableOpacity
-                    onPress={() => alert(item.name)}
-                    style={[styles.categoryBox, { borderColor: item.color }]}>
-                    <Text style={{ ...styles.categoryText, color: item.color }}>
-                        {item.name}
-                    </Text>
-                </TouchableOpacity>
-        </View>   
+            <TouchableOpacity
+                onPress={() => setCategory(item)}
+                style={[styles.categoryBox, { borderColor: item.color }]}>
+                <Text style={{ ...styles.categoryText, color: item.color }}>
+                    {item.name}
+                </Text>
+            </TouchableOpacity>
+        </View>
     );
 
+    handleSubmit = async () => {
+        if (amount === '') {
+            Alert.alert('Amount cannot be empty!');
+            return;
+        } else if (comment.trim() === '') {
+            Alert.alert('Comment cannot be empty!');
+            return;
+        } else if (!Object.keys(category).length) {
+            Alert.alert('Category cannot be empty!');
+            return;
+        }
+    
+        let amountValue = amount.replace('$', '');
+    
+        await addDoc(collection(db, 'transactions'), {
+            amount: amountValue,
+            date,
+            category: { 
+                id: category.id,
+                name: category.name,
+                color: category.color,
+             },
+            notes: comment,
+        });
+    
+        // Reset form fields and navigate
+        setComment('');
+        setAmount('');
+        navigation.navigate('Dashboard');
+    }
 
     return (
         <View style={styles.container}>
@@ -71,16 +104,19 @@ const AddTransactionScreen = ({ navigation }) => {
                 </Text>
             </View>
             <View>
-            <FlatList
-                    numColumns={4}
-                    data={categories}
-                    keyExtractor={item => item.id}
-                    renderItem={renderItem}
-                />
-                </View>
+                { loading ?
+                    <ActivityIndicator style={styles.loader} size={'large'} /> : 
+                    <FlatList
+                        numColumns={4}
+                        data={categories}
+                        keyExtractor={item => item.id}
+                        renderItem={renderItem}
+                    />
+                }
+            </View>
             <View style={[styles.addButton, { backgroundColor: 'grey' }]}>
                 <Button
-                onPress={() => { navigation.navigate('Categories') }}
+                    onPress={() => { navigation.navigate('Categories') }}
                     mode="contained"
                     title="+ Create"
                     color={'white'}
@@ -162,11 +198,7 @@ const AddTransactionScreen = ({ navigation }) => {
                     mode="contained"
                     title="Save"
                     color={'white'}
-                    onPress={() => {
-                      setComment('');
-                      setAmount('');
-                      navigation.navigate('Dashboard');
-                    }}
+                    onPress={handleSubmit}
                 >
                 </Button>
             </View>
