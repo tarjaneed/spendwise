@@ -73,6 +73,12 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: 'flex-end',
     },
+    color: {
+        margin: 10,
+        width: 15,
+        height: 15,
+        borderRadius: 18 / 2,
+    },
 });
 
 export { styles };

@@ -33,8 +33,14 @@ const TransactionsScreen = ({ }) => {
 		setSortField(property);
 	};
 
+	const handleDelete = (itemId) => {
+		const updatedTransactions = transactions.filter(item => item.id !== itemId);
+		setTransactions(updatedTransactions);
+	  };
+
 	const renderItem = ({ item }) => (
-		<TouchableOpacity style={styles.card}>
+		<TouchableOpacity style={styles.card}
+		onLongPress={() => handleDelete(item.id)}>
 			<View style={styles.cardDate}>
 				<View>
 					<Text style={styles.text}>
@@ -46,6 +52,7 @@ const TransactionsScreen = ({ }) => {
 				</View>
 				<View style={styles.divider} />
 			</View>
+			<View style={[styles.color, { backgroundColor: item.category.color }]} />
 			<View style={styles.cardText}>
 				<Text style={styles.text}>{item.category.name}</Text>
 				<Text style={{ color: 'grey' }}>

@@ -73,7 +73,7 @@ const DashboardScreen = ({ navigation }) => {
                                     </View>
                                     <View style={styles.rightContent}>
                                         <Text style={styles.text}>10 %</Text>
-                                        <Text style={styles.text}>$ 550</Text>
+                                        <Text style={styles.text}>$ {item.total}</Text>
                                     </View>
                                 </View>
                             </View>
