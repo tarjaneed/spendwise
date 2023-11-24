@@ -38,13 +38,13 @@ const CategoryScreen = ({ navigation }) => {
         e.preventDefault();
         if (name !== "") {
             if (Object.keys(category).length) {
-                await updateDoc(doc(db, "categories", category.id), { 
+                await updateDoc(doc(db, 'categories', category.id), { 
                     name,
                     color: category.color,
                     total: category.total,
                 });
             } else {
-                await addDoc(collection(db, "categories"), {
+                await addDoc(collection(db, 'categories'), {
                     name: name,
                     color: randomColor(),
                     total: 0,
