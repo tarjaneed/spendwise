@@ -1,4 +1,4 @@
-import { FlatList, View, Image, Button, TouchableOpacity, Text, RefreshControl, Alert } from 'react-native';
+import { FlatList, View, Button, TouchableOpacity, Text, Alert } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 
 import { collection, query, onSnapshot, where } from 'firebase/firestore';
@@ -7,6 +7,7 @@ import { netExpense } from '../../utils/HelperFunctions';
 
 import { styles } from './Styles';
 import AuthContext from '../../context/AuthContext';
+import PieChart from '../../components/pieChart/PieChart';
 
 const DashboardScreen = ({ navigation, allCategories }) => {
 
@@ -47,14 +48,9 @@ const DashboardScreen = ({ navigation, allCategories }) => {
         return (
             <View style={styles.container}>
                 <View style={styles.chartAndButton}>
-                    <View style={styles.chartImage}>
-                        <Image
-                            source={require('../../assets/chart1.png')}
-                            style={{ height: 180, width: 210 }}
-                        />
-                        <Text style ={{fontWeight: 'bold', fontSize: 20, color: '#005A9C'}}>$ {total}</Text>
-                    </View>
-
+          
+                <PieChart categories={categories} />
+                <Text style ={styles.amountDisplay}>$ {total}</Text>
                     <View style={styles.addButton}>
                         <Button
                             mode="contained"
@@ -93,6 +89,5 @@ const DashboardScreen = ({ navigation, allCategories }) => {
             </View>
         );
 };
-
 
 export default DashboardScreen;
