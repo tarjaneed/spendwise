@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Button, FlatList, ActivityIndicator, Alert } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { collection, addDoc, query, onSnapshot, doc, getDoc, updateDoc, where } from 'firebase/firestore';
 
@@ -9,7 +10,7 @@ import { db } from '../../firebase';
 
 import { styles } from './Styles';
 import AuthContext from '../../context/AuthContext';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+
 
 const AddTransactionScreen = ({ navigation }) => {
 
@@ -65,7 +66,7 @@ const AddTransactionScreen = ({ navigation }) => {
         } else if (comment.trim() === '') {
             Alert.alert('Comment cannot be empty!');
             return;
-        } else if (!Object.keys(category).length) {
+        } else if (category == null) {
             Alert.alert('Category cannot be empty!');
             return;
         }
@@ -102,7 +103,7 @@ const AddTransactionScreen = ({ navigation }) => {
             setAmount('');
             setCategory(null);
             setComment('');
-            // Reset date after datepicker changes
+            setDate(moment(new Date()).format('YYYY-MM-DD'));
             setLoading(false);
             navigation.navigate('Dashboard');
         } catch (err) {
@@ -110,6 +111,11 @@ const AddTransactionScreen = ({ navigation }) => {
             setLoading(false);
             Alert.alert('An error occured while adding a transaction.')
         }
+    }
+
+    handleSelectedDate = (seletedDate) => {
+        return seletedDate == moment(date).format('YYYY-MM-DD').toString() ?
+            '#808080' : '#E6E6E6';
     }
 
     return (
@@ -159,22 +165,24 @@ const AddTransactionScreen = ({ navigation }) => {
                     <Text style={styles.heading}>Date</Text>
                     <View style={styles.dateContainer}>
                         <View style={styles.dateBoxes}>
-
                             <TouchableOpacity
                                 style={[
                                     styles.dateBox,
-                                    { marginRight: 30 },
+                                    { 
+                                        marginRight: 30, 
+                                        backgroundColor: handleSelectedDate(moment().subtract(1, 'days').startOf('day').format('YYYY-MM-DD').toString()),
+                                    },
                                 ]}
                                 onPress={() => setDate(
-                                        moment().subtract(1, 'days').startOf('day')
+                                    moment().subtract(1, 'days').startOf('day')
                                         .format('YYYY-MM-DD')
                                         .toString()
-                                    )
+                                )
                                 }
                             >
                                 <View style={styles.textContainer}>
                                     <Text style={styles.dateText}>
-                                        { moment().subtract(1, 'days').startOf('day').format('MM/DD') }
+                                        {moment().subtract(1, 'days').startOf('day').format('MM/DD')}
                                     </Text>
                                     <Text style={styles.dateText}>Yesterday</Text>
                                 </View>
@@ -183,13 +191,16 @@ const AddTransactionScreen = ({ navigation }) => {
                             <TouchableOpacity
                                 style={[
                                     styles.dateBox,
-                                    { marginRight: 30 },
+                                    {
+                                        marginRight: 30, 
+                                        backgroundColor: handleSelectedDate(moment().format('YYYY-MM-DD').toString()),
+                                    },
                                 ]}
-                                onPress={() => setDate(moment.format('YYYY-MM-DD'))}
+                                onPress={() => setDate(moment().format('YYYY-MM-DD'))}
                             >
                                 <View style={styles.textContainer}>
                                     <Text style={styles.dateText}>
-                                        { moment().format('MM/DD').toString() }
+                                        {moment().format('MM/DD').toString()}
                                     </Text>
                                     <Text style={styles.dateText}>Today</Text>
                                 </View>
@@ -198,18 +209,21 @@ const AddTransactionScreen = ({ navigation }) => {
                             <TouchableOpacity
                                 style={[
                                     styles.dateBox,
-                                    { marginRight: 30 },
+                                    { 
+                                        marginRight: 30, 
+                                        backgroundColor: handleSelectedDate(moment().add(1, 'days').format('YYYY-MM-DD').toString()),
+                                    }
                                 ]}
                                 onPress={() => setDate(
                                     moment().add(1, 'days')
-                                    .format('YYYY-MM-DD')
-                                    .toString()
+                                        .format('YYYY-MM-DD')
+                                        .toString()
                                 )
-                            }
+                                }
                             >
                                 <View style={styles.textContainer}>
                                     <Text style={styles.dateText}>
-                                        { moment().add(1, 'days').format('MM/DD') }
+                                        {moment().add(1, 'days').format('MM/DD')}
                                     </Text>
                                     <Text style={styles.dateText}>Tomorrow</Text>
                                 </View>
@@ -218,7 +232,7 @@ const AddTransactionScreen = ({ navigation }) => {
                             <TouchableOpacity
                                 style={styles.calendarIcon}
                                 onPress={() => {
-                                   setShowDatePicker(true);
+                                    setShowDatePicker(true);
                                 }}>
                                 <FontAwesome
                                     name="calendar"
@@ -227,7 +241,15 @@ const AddTransactionScreen = ({ navigation }) => {
                                 />
                             </TouchableOpacity>
 
-                            { showDatePicker && <RNDateTimePicker value={new Date()} hide={showDatePicker} /> }
+                            <DateTimePickerModal
+                                isVisible={showDatePicker}
+                                mode="date"
+                                onConfirm={date => {
+                                    setDate(moment(date).format('YYYY-MM-DD').toString());
+                                    setShowDatePicker(false);
+                                }}
+                                onCancel={() => setShowDatePicker(false)}
+                            />
                         </View>
                     </View>
                 </View>
