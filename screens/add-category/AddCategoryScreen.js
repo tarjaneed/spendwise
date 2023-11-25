@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Text, View, TextInput, Button, FlatList, ActivityIndicator, Alert } from 'react-native';
 import { styles } from './Styles';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import randomColor from 'randomcolor';
 
-import { collection, addDoc, query, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, query, onSnapshot, doc, updateDoc, deleteDoc, where } from 'firebase/firestore';
 
 import { db } from '../../firebase';
+import AuthContext from '../../context/AuthContext';
 
 const CategoryScreen = ({ navigation }) => {
 
+    const { userID } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [category, setCategory] = useState({});
     const [name, setName] = useState('');
@@ -17,7 +19,7 @@ const CategoryScreen = ({ navigation }) => {
 
     // Lists Categories
     useEffect(() => {
-        const q = query(collection(db, 'categories'));
+        const q = query(collection(db, 'categories'), where('userID', '==', userID));
         const unsub = onSnapshot(q, (querySnapshot) => {
             let categories = [];
             querySnapshot.forEach((doc) => {
@@ -38,13 +40,15 @@ const CategoryScreen = ({ navigation }) => {
         e.preventDefault();
         if (name !== "") {
             if (Object.keys(category).length) {
-                await updateDoc(doc(db, 'categories', category.id), { 
+                await updateDoc(doc(db, 'categories', category.id), {
+                    userID: category.userID,
                     name,
                     color: category.color,
                     total: parseFloat(category.total),
                 });
             } else {
                 await addDoc(collection(db, 'categories'), {
+                    userID,
                     name: name,
                     color: randomColor(),
                     total: 0.00,
