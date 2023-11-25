@@ -36,15 +36,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
     },
-    dateContainer: {
-        flex: 2,
-        backgroundColor: '#fff',
-        marginVertical: 10,
-        marginHorizontal: 15,
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        justifyContent: 'center',
-    },
     dataContainer: {
         flex: 12,
         marginHorizontal: 15,

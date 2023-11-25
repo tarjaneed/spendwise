@@ -1,6 +1,5 @@
-import { FlatList, View, Image, Button, TouchableOpacity, Text, RefreshControl, landscape, ActivityIndicator, Alert } from 'react-native';
+import { FlatList, View, Image, Button, TouchableOpacity, Text, RefreshControl, Alert } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
-import DateTypeSelection from '../../components/dateTypeSelection/DateTypeSelection';
 
 import { collection, query, onSnapshot, where } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -14,9 +13,7 @@ const DashboardScreen = ({ navigation, allCategories }) => {
     const { userID } = useContext(AuthContext);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
     const [total, setTotal] = useState(0); // To show within pie chart
-    const [date, setDate] = useState(new Date());
 
     // Lists Categories with total > 0
     useEffect(() => {
@@ -47,44 +44,8 @@ const DashboardScreen = ({ navigation, allCategories }) => {
         }
     }, []);
 
-    const onRefresh = () => {
-        setRefreshing(true);
-        reload();
-        setRefreshing(false);
-    };
-
-    const handleDateFilter = (type, value) => {
-        /*   if (allCategories === null) {
-             setCategories(null);
-             return;
-           }
-           let tempCategories = JSON.parse(JSON.stringify(allCategories));
-           let filteredCategories = dateFilterHelper(type, value, tempCategories);
-           let total = netExpense(filteredCategories);
-           filteredCategories = filteredCategories.map((item, index) => {
-             item.percentage = Math.round((item.totalExpense / total) * 100);
-             return item;
-           });
-           setCategories(filteredCategories);
-           setTotal(total);
-   
-           */
-    };
-
-    if (loading) {
-        return (
-            <ActivityIndicator style={styles.loader} size={'large'} />
-        );
-    } else {
         return (
             <View style={styles.container}>
-                <View style={[styles.dateContainer, landscape && { flex: 2 }]}>
-                    <DateTypeSelection
-                        date={date}
-                        sendDateToHome={handleDateFilter}
-                    />
-                </View>
-
                 <View style={styles.chartAndButton}>
                     <View style={styles.chartImage}>
                         <Image
@@ -109,9 +70,6 @@ const DashboardScreen = ({ navigation, allCategories }) => {
                     <FlatList
                         data={categories}
                         keyExtractor={item => item.id}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                        }
                         renderItem={({ item }) => {
                             return (
                                 <TouchableOpacity>
@@ -134,7 +92,6 @@ const DashboardScreen = ({ navigation, allCategories }) => {
                 </View>
             </View>
         );
-    }
 };
 
 
