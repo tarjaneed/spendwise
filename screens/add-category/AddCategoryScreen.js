@@ -41,13 +41,13 @@ const CategoryScreen = ({ navigation }) => {
                 await updateDoc(doc(db, 'categories', category.id), { 
                     name,
                     color: category.color,
-                    total: category.total,
+                    total: parseFloat(category.total),
                 });
             } else {
                 await addDoc(collection(db, 'categories'), {
                     name: name,
                     color: randomColor(),
-                    total: 0,
+                    total: 0.00,
                 });
             }
             setLoading(false);

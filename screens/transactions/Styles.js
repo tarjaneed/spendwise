@@ -1,6 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+    spinner: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        backgroundColor: '#f3f3f3',
+        height: deviceHeight,
+        zIndex: 1,
+    },
     footer: {
         flex: 2,
         flexDirection: 'row',

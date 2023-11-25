@@ -4,6 +4,17 @@ let deviceHeight = Dimensions.get('window').height;
 let deviceWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+    spinner: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        backgroundColor: '#f3f3f3',
+        height: deviceHeight,
+        zIndex: 1,
+    },
     container: {
         height: deviceHeight,
         width: deviceWidth,
@@ -57,7 +68,7 @@ const styles = StyleSheet.create({
     },
     categoryText: {
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     dateContainer: {
         marginTop: 5,
