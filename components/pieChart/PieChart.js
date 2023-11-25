@@ -5,35 +5,16 @@ import { styles } from './Styles';
 
 const App = ({ categories }) => {
 
-  useEffect(() => {
-    console.log('categories:', categories);
-  }, [categories]);
+  const chartData = categories.map((item) => ({
+    key: item.name,
+    count: item.total,
+    color: item.color,
+  }));
 
   return (
     <View style={styles.container}>
       <PieChart
-        data={[
-          {
-            key: 'Travel',
-            count: 20,
-            color: '#1f43e2',
-          },
-          {
-            key: 'Second Data',
-            count: 25,
-            color: '#cb64e0',
-          },
-          {
-            key: 'Third Data',
-            count: 40,
-            color: '#fc20a4',
-          },
-          {
-            key: 'Fourth Data',
-            count: 35,
-            color: '#55c111',
-          },
-        ]}
+        data={chartData}
         length={200}
       />
     </View>
