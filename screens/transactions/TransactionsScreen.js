@@ -20,6 +20,7 @@ const TransactionsScreen = ({ }) => {
 
 	// Lists transactions
 	useEffect(() => {
+		console.log('userID', userID);
 		const q = query(collection(db, 'transactions'), where('userID', '==', userID), orderBy(sortField, 'desc'));
 		const unsub = onSnapshot(q, (querySnapshot) => {
 			let transactions = [];

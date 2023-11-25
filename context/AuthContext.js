@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const [signedIn, setSignedIn] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [userID, setUserID] = useState();
+    const [userID, setUserID] = useState(null);
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -35,9 +35,10 @@ export const AuthProvider = ({ children }) => {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
+                setUserID(user?.uid);
+                setSignedIn(true);
                 AsyncStorage.setItem("token", user?.stsTokenManager?.accessToken);
                 AsyncStorage.setItem("userID", user?.uid);
-                setSignedIn(true);
             })
             .catch((error) => {
                 setError(`Email/Password is incorrect`);
@@ -75,6 +76,7 @@ export const AuthProvider = ({ children }) => {
     const signOut = async () => {
         AsyncStorage.removeItem("token");
         AsyncStorage.removeItem("userID");
+        setUserID(null);
         setSignedIn(null);
         setLoading(false);
     };

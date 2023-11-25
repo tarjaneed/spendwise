@@ -1,5 +1,5 @@
 import { FlatList, View, Image, Button, TouchableOpacity, Text, RefreshControl, landscape, ActivityIndicator, Alert } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import DateTypeSelection from '../../components/dateTypeSelection/DateTypeSelection';
 
 import { collection, query, onSnapshot, where } from 'firebase/firestore';
@@ -7,9 +7,11 @@ import { db } from '../../firebase';
 import { netExpense } from '../../utils/HelperFunctions';
 
 import { styles } from './Styles';
+import AuthContext from '../../context/AuthContext';
 
 const DashboardScreen = ({ navigation, allCategories }) => {
 
+    const { userID } = useContext(AuthContext);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -19,7 +21,7 @@ const DashboardScreen = ({ navigation, allCategories }) => {
     // Lists Categories with total > 0
     useEffect(() => {
         try {
-            const q = query(collection(db, 'categories'), where('total', '>', 0));
+            const q = query(collection(db, 'categories'), where('userID', '==', userID), where('total', '>', 0));
             const unsub = onSnapshot(q, (querySnapshot) => {
                 let categories = [];
                 querySnapshot.forEach((doc) => {
