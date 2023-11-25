@@ -12,7 +12,7 @@ const firebaseConfig = {
     messagingSenderId: "",
     appId: "",
     measurementId: ""
-  };
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
