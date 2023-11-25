@@ -108,7 +108,7 @@ const CategoryScreen = ({ navigation }) => {
         );
     } else {
         return (
-            <View>
+            <View style={{flex:1, backgroundColor: '#f0ffff'}}>
                 <View style={styles.header}>
                     <TextInput
                         style={styles.input}
