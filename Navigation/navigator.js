@@ -8,6 +8,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import LoginScreen from '../screens/login/LoginScreen';
 import RegisterScreen from '../screens/register/RegisterScreen';
+import ForgotUsernameScreen from '../screens/forgot-username/ForgotUsernameScreen';
+import ForgotPasswordScreen from '../screens/forgot-password1/ForgotPasswordScreen';
+import ForgotPasswordScreen2 from '../screens/forgot-password2/ForgotPasswordScreen2';
 import DashboardScreen from '../screens/dashboard/DashboardScreen';
 import AddTransactionScreen from '../screens/add-transaction/AddTransactionScreen';
 import AddCategoryScreen from '../screens/add-category/AddCategoryScreen';
@@ -44,6 +47,48 @@ const AuthStackScreen = () => (
             }}
             name="CreateAccount"
             component={RegisterScreen}
+        />
+        <AuthStack.Screen
+            options={{
+                title: "Forgot Username",
+                headerStyle: {
+                    backgroundColor: '#005A9C',
+                },
+                headerTintColor: '#ffffff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }}
+            name="ForgotUsername"
+            component={ForgotUsernameScreen}
+        />
+        <AuthStack.Screen
+            options={{
+                title: "Forgot Password",
+                headerStyle: {
+                    backgroundColor: '#005A9C',
+                },
+                headerTintColor: '#ffffff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }}
+            name="ForgotPassword1"
+            component={ForgotPasswordScreen}
+        />
+        <AuthStack.Screen
+            options={{
+                title: "Forgot Password",
+                headerStyle: {
+                    backgroundColor: '#005A9C',
+                },
+                headerTintColor: '#ffffff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }}
+            name="ForgotPassword2"
+            component={ForgotPasswordScreen2}
         />
     </AuthStack.Navigator>
 );

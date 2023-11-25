@@ -72,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
 
                 <TouchableOpacity
                     onPress={() => {
-                        alert('You have pressed the Forgot User/Pass text')
+                        navigation.navigate('ForgotUsername')
                     }}
                     style={styles.touchableForgotUserPassText}
                 >
