@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity, FlatList, landscape, Alert, ActivityIndic
 import { useEffect, useState } from 'react';
 import { styles } from './Styles';
 import moment from 'moment';
+import DateTypeSelection from '../../components/dateTypeSelection/DateTypeSelection';
 
 import { db } from '../../firebase';
 import { collection, query, onSnapshot, orderBy, updateDoc, getDoc, deleteDoc, doc } from 'firebase/firestore';
@@ -11,6 +12,9 @@ const TransactionsScreen = ({ }) => {
 	const [loading, setLoading] = useState(false);
 	const [transactions, setTransactions] = useState([]);
 	const [sortField, setSortField] = useState('amount');
+	const [tempTransactions, setTempTransactions] = useState([]);
+	const [dateAndType, setdateAndType] = useState([]);
+	const [date, setDate] = useState(new Date());
 
 	// Lists transactions
 	useEffect(() => {
@@ -75,6 +79,39 @@ const TransactionsScreen = ({ }) => {
 		);
 	};
 
+	const handleDateFilter = (type, value) => {
+		setdateAndType([type, value]);
+		switch (type) {
+		  case 'Day':
+			setTransactions(
+			  tempTransactions.filter(
+				item =>
+				  new Date(item.transactionDate).toLocaleDateString() ===
+				  value.toLocaleDateString(),
+			  ),
+			);
+			break;
+		  case 'Month':
+			setTransactions(
+			  tempTransactions.filter(item => {
+				let date = new Date(item.transactionDate);
+				return (
+				  date.getMonth() === value.getMonth() &&
+				  date.getFullYear() === value.getFullYear()
+				);
+			  }),
+			);
+			break;
+		  case 'Year':
+			setTransactions(
+			  tempTransactions.filter(
+				item => new Date(item.transactionDate).getFullYear() === value,
+			  ),
+			);
+			break;
+		}
+	  };
+
 	const renderItem = ({ item }) => (
 		<TouchableOpacity style={styles.card}
 			onLongPress={() => handleDelete(item)}>
@@ -111,7 +148,13 @@ const TransactionsScreen = ({ }) => {
 		);
 	} else {
 		return (
-			<View style={{ flex: 1 }}>
+		<View style={{ flex: 1 ,backgroundColor: '#f0ffff'}}>
+  			<View style={[styles.dateContainer, landscape && {flex: 2}]}>
+                  <DateTypeSelection
+                    date={date}
+                    sendDateToHome={handleDateFilter}
+                  />
+                </View>
 				<View style={[styles.dataContainer, landscape && { flex: 3 }]}>
 					<FlatList
 						data={transactions}

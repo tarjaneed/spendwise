@@ -1,15 +1,17 @@
-import { FlatList, View, Image, Button, TouchableOpacity, Text, RefreshControl } from 'react-native';
+import { FlatList, View, Image, Button, TouchableOpacity, Text, RefreshControl, landscape} from 'react-native';
 import { useEffect, useState } from 'react';
+import DateTypeSelection from '../../components/dateTypeSelection/DateTypeSelection';
 
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { styles } from './Styles';
 
-const DashboardScreen = ({ navigation }) => {
+const DashboardScreen = ({ navigation, allCategories }) => {
 
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [date, setDate] = useState(new Date());
 
     // Lists Categories
     useEffect(() => {
@@ -34,8 +36,34 @@ const DashboardScreen = ({ navigation }) => {
         setRefreshing(false);
     };
 
+    const handleDateFilter = (type, value) => {
+     /*   if (allCategories === null) {
+          setCategories(null);
+          return;
+        }
+        let tempCategories = JSON.parse(JSON.stringify(allCategories));
+        let filteredCategories = dateFilterHelper(type, value, tempCategories);
+        let total = netExpense(filteredCategories);
+        filteredCategories = filteredCategories.map((item, index) => {
+          item.percentage = Math.round((item.totalExpense / total) * 100);
+          return item;
+        });
+        setCategories(filteredCategories);
+        setTotal(total);
+
+        */
+      };
+
     return (
         <View style={styles.container}>
+
+<View style={[styles.dateContainer, landscape && {flex: 2}]}>
+                  <DateTypeSelection
+                    date={date}
+                    sendDateToHome={handleDateFilter}
+                  />
+                </View>
+
             <View style={styles.chartAndButton}>
                 <View style={styles.chartImage}>
                     <Image
