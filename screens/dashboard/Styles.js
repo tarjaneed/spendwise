@@ -102,15 +102,6 @@ const styles = StyleSheet.create({
     text: {
         fontWeight: 'bold'
     },
-    dateContainer: {
-        flex: 2,
-        backgroundColor: '#fff',
-        marginHorizontal: 10,
-        marginTop: 15,
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        justifyContent: 'center',
-      },
 });
 
 export { styles };
