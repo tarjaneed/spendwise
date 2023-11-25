@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0ffff',
     },
     chartAndButton: {
-        height: deviceHeight * 0.3,
+        height: deviceHeight * 0.35,
         justifyContent: 'space-evenly',
         borderRadius: 15,
         margin: 15,
@@ -43,10 +43,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         paddingLeft: 10,
         fontWeight: 'bold'
-    },
-    chartImage: {
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     cardContent: {
         borderRadius: 10,
@@ -102,6 +98,12 @@ const styles = StyleSheet.create({
     text: {
         fontWeight: 'bold'
     },
+    amountDisplay :{
+        fontWeight: 'bold',
+         fontSize: 25, 
+         color: '#005A9C',
+         textAlign: 'center',
+        }
 });
 
 export { styles };
