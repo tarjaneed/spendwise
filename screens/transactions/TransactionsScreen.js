@@ -1,10 +1,10 @@
-import { Text, View, TouchableOpacity, FlatList, landscape } from 'react-native';
+import { Text, View, TouchableOpacity, FlatList, landscape, Alert, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 import { styles } from './Styles';
 import moment from 'moment';
 
 import { db } from '../../firebase';
-import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy, updateDoc, getDoc, deleteDoc, doc } from 'firebase/firestore';
 
 const TransactionsScreen = ({ }) => {
 
@@ -33,14 +33,51 @@ const TransactionsScreen = ({ }) => {
 		setSortField(property);
 	};
 
-	const handleDelete = (itemId) => {
-		const updatedTransactions = transactions.filter(item => item.id !== itemId);
-		setTransactions(updatedTransactions);
-	  };
+	const handleDelete = (transaction) => {
+		Alert.alert(
+			'Delete Transaction',
+			'Are you sure you want to delete?',
+			[
+				{
+					text: 'Yes',
+					onPress: async () => {
+						setLoading(true);
+						try {
+							await deleteDoc(doc(db, 'transactions', transaction.id));
+
+							// Get doc based on categoryID
+							const docRef = doc(db, 'categories', transaction.category.id);
+							const docSnap = await getDoc(docRef);
+
+							const categoryData = docSnap.data();
+
+							// Update total for that doc
+							const totalAmount = parseFloat(categoryData.total) - parseFloat(transaction.amount);
+							categoryData.total = totalAmount;
+
+							await updateDoc(doc(db, 'categories', transaction.category.id), categoryData);
+							setLoading(false);
+						} catch (error) {
+							Alert.alert('Error occured while deleting a transaction.', error);
+							setLoading(false);
+						}
+					},
+					style: 'default',
+				},
+				{
+					text: 'No',
+					style: 'cancel',
+				},
+			],
+			{
+				cancelable: true,
+			},
+		);
+	};
 
 	const renderItem = ({ item }) => (
 		<TouchableOpacity style={styles.card}
-		onLongPress={() => handleDelete(item.id)}>
+			onLongPress={() => handleDelete(item)}>
 			<View style={styles.cardDate}>
 				<View>
 					<Text style={styles.text}>
@@ -70,7 +107,7 @@ const TransactionsScreen = ({ }) => {
 
 	if (loading) {
 		return (
-			<ActivityIndicator style={styles.loader} size={'large'} />
+			<ActivityIndicator style={styles.spinner} pointerEvents={'none'} size={'large'} />
 		);
 	} else {
 		return (

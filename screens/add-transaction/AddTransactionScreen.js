@@ -3,7 +3,7 @@ import { Text, View, TextInput, TouchableOpacity, Button, FlatList, ActivityIndi
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 
-import { collection, addDoc, query, onSnapshot, doc } from 'firebase/firestore';
+import { collection, addDoc, query, onSnapshot, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 import { db } from '../../firebase';
 
@@ -46,7 +46,7 @@ const AddTransactionScreen = ({ navigation }) => {
         <View style={{ marginLeft: 5 }}>
             <TouchableOpacity
                 onPress={() => setCategory(item)}
-                style={[styles.categoryBox, { borderColor: item.color }]}>
+                style={[styles.categoryBox, { borderColor: item.color }, { backgroundColor: category?.id === item?.id ? '#E6E6E6' : null }]}>
                 <Text style={{ ...styles.categoryText, color: item.color }}>
                     {item.name}
                 </Text>
@@ -65,144 +65,170 @@ const AddTransactionScreen = ({ navigation }) => {
             Alert.alert('Category cannot be empty!');
             return;
         }
-    
+
         let amountValue = amount.replace('$', '');
-    
-        await addDoc(collection(db, 'transactions'), {
-            amount: amountValue,
-            date,
-            category: { 
-                id: category.id,
-                name: category.name,
-                color: category.color,
-             },
-            notes: comment,
-        });
-    
-        // Reset form fields and navigate
-        setComment('');
-        setAmount('');
-        navigation.navigate('Dashboard');
+
+        try {
+            setLoading(true);
+            await addDoc(collection(db, 'transactions'), {
+                amount: amountValue,
+                date,
+                category: {
+                    id: category.id,
+                    name: category.name,
+                    color: category.color,
+                },
+                notes: comment,
+            });
+
+            // Get doc based on categoryID
+            const docRef = doc(db, 'categories', category.id);
+            const docSnap = await getDoc(docRef);
+
+            const categoryData = docSnap.data();
+
+            // Update total for that doc
+            const totalAmount = parseFloat(categoryData.total) + parseFloat(amountValue);
+            categoryData.total = totalAmount;
+
+            await updateDoc(doc(db, 'categories', category.id), categoryData);
+
+            // Reset form fields and navigate
+            setAmount('');
+            setCategory(null);
+            setComment('');
+            // Reset date after datepicker changes
+            setLoading(false);
+            navigation.navigate('Dashboard');
+        } catch (err) {
+            console.log(err);
+            setLoading(false);
+            Alert.alert('An error occured while adding a transaction.')
+        }
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.topContainer}>
-                <TextInput
-                    style={styles.amountField}
-                    autoFocus={true}
-                    placeholder="Amount"
-                    keyboardType="decimal-pad"
-                    value={amount}
-                    onChangeText={handleTextChange}
-                />
-            </View>
-
-            <View style={{ marginHorizontal: 5 }}>
-                <Text style={styles.heading}>
-                    Categories
-                </Text>
-            </View>
-            <View>
-                { loading ?
-                    <ActivityIndicator style={styles.loader} size={'large'} /> : 
-                    <FlatList
-                        numColumns={4}
-                        data={categories}
-                        keyExtractor={item => item.id}
-                        renderItem={renderItem}
+        loading ?
+            <View style={styles.spinner} pointerEvents={'none'}>
+                <ActivityIndicator size={'large'} />
+            </View> :
+            <View style={styles.container}>
+                <View style={styles.topContainer}>
+                    <TextInput
+                        style={styles.amountField}
+                        autoFocus={true}
+                        placeholder="Amount"
+                        keyboardType="decimal-pad"
+                        value={amount}
+                        onChangeText={handleTextChange}
                     />
-                }
-            </View>
-            <View style={[styles.addButton, { backgroundColor: 'grey' }]}>
-                <Button
-                    onPress={() => { navigation.navigate('Categories') }}
-                    mode="contained"
-                    title="+ Create"
-                    color={'white'}
-                >
-                </Button>
-            </View>
+                </View>
 
-            <View style={{ marginHorizontal: 5 }}>
-                <Text style={styles.heading}>Date</Text>
-                <View style={styles.dateContainer}>
-                    <View style={styles.dateBoxes}>
+                <View style={{ marginHorizontal: 5 }}>
+                    <Text style={styles.heading}>
+                        Categories
+                    </Text>
+                </View>
+                <View>
+                    {loading ?
+                        <ActivityIndicator style={styles.loader} size={'large'} /> :
+                        <FlatList
+                            numColumns={4}
+                            data={categories}
+                            keyExtractor={item => item.id}
+                            renderItem={renderItem}
+                        />
+                    }
+                </View>
+                <View style={[styles.addButton, { backgroundColor: 'grey' }]}>
+                    <Button
+                        onPress={() => { navigation.navigate('Categories') }}
+                        mode="contained"
+                        title="+ Create"
+                        color={'white'}
+                    >
+                    </Button>
+                </View>
 
-                        <TouchableOpacity
-                            style={[
-                                styles.dateBox,
-                                { marginRight: 30 },
-                            ]}>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.dateText}>
-                                    12/21
-                                </Text>
-                                <Text style={styles.dateText}>Yesterday</Text>
-                            </View>
-                        </TouchableOpacity>
+                <View style={{ marginHorizontal: 5 }}>
+                    <Text style={styles.heading}>Date</Text>
+                    <View style={styles.dateContainer}>
+                        <View style={styles.dateBoxes}>
 
-                        <TouchableOpacity
-                            style={[
-                                styles.dateBox,
-                                { marginRight: 30 },
-                            ]}>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.dateText}>
-                                    12/20
-                                </Text>
-                                <Text style={styles.dateText}>Today</Text>
-                            </View>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.dateBox,
+                                    { marginRight: 30 },
+                                ]}>
+                                <View style={styles.textContainer}>
+                                    <Text style={styles.dateText}>
+                                        12/21
+                                    </Text>
+                                    <Text style={styles.dateText}>Yesterday</Text>
+                                </View>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={[
-                                styles.dateBox,
-                                { marginRight: 30 },
-                            ]}>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.dateText}>
-                                    12/19
-                                </Text>
-                                <Text style={styles.dateText}>Tomorrow</Text>
-                            </View>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.dateBox,
+                                    { marginRight: 30 },
+                                ]}>
+                                <View style={styles.textContainer}>
+                                    <Text style={styles.dateText}>
+                                        12/20
+                                    </Text>
+                                    <Text style={styles.dateText}>Today</Text>
+                                </View>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.calendarIcon}
-                            onPress={() => {
-                                alert('');
-                            }}>
-                            <FontAwesome
-                                name="calendar"
-                                size={25}
-                                color={'#23c0f2'}
-                            />
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.dateBox,
+                                    { marginRight: 30 },
+                                ]}>
+                                <View style={styles.textContainer}>
+                                    <Text style={styles.dateText}>
+                                        12/19
+                                    </Text>
+                                    <Text style={styles.dateText}>Tomorrow</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.calendarIcon}
+                                onPress={() => {
+                                    alert('');
+                                }}>
+                                <FontAwesome
+                                    name="calendar"
+                                    size={25}
+                                    color={'#23c0f2'}
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
 
-            <View style={{ marginHorizontal: 8 }}>
-                <Text style={styles.heading}>Note</Text>
-                <TextInput
-                    style={styles.note}
-                    placeholder="Comment"
-                    value={comment}
-                    onChangeText={(value) => setComment(value)}
-                />
-            </View>
+                <View style={{ marginHorizontal: 8 }}>
+                    <Text style={styles.heading}>Note</Text>
+                    <TextInput
+                        style={styles.note}
+                        placeholder="Comment"
+                        value={comment}
+                        onChangeText={(value) => setComment(value)}
+                    />
+                </View>
 
-            <View style={styles.addButton}>
-                <Button
-                    mode="contained"
-                    title="Save"
-                    color={'white'}
-                    onPress={handleSubmit}
-                >
-                </Button>
+                <View style={styles.addButton}>
+                    <Button
+                        mode="contained"
+                        title="Save"
+                        color={'white'}
+                        onPress={handleSubmit}
+                    >
+                    </Button>
+                </View>
             </View>
-        </View>
     );
 };
 
