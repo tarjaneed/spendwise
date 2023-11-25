@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         marginVertical: 12,
         justifyContent: 'center',
         padding: 5,
-        backgroundColor: '#23c0f2',
+        backgroundColor: '#005A9C',
         fontWeight: 'bold'
     },
 });

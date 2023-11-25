@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         justifyContent: 'center',
         padding: 6,
-        backgroundColor: '#23c0f2',
+        backgroundColor: '#005A9C',
         fontWeight: 'bold'
     },
     card: {

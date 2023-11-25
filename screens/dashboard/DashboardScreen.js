@@ -52,7 +52,7 @@ const DashboardScreen = ({ navigation, allCategories }) => {
                             source={require('../../assets/chart1.png')}
                             style={{ height: 180, width: 210 }}
                         />
-                        <Text>{total}</Text>
+                        <Text style ={{fontWeight: 'bold', fontSize: 20, color: '#005A9C'}}>$ {total}</Text>
                     </View>
 
                     <View style={styles.addButton}>
