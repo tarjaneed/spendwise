@@ -25,21 +25,21 @@ const DashboardScreen = ({ navigation, allCategories }) => {
                 querySnapshot.forEach((doc) => {
                     categories.push({ ...doc.data(), id: doc.id });
                 });
-    
+
                 let total = netExpense(categories);
                 let updatedCategories = categories.map((item, index) => {
                     item.percentage = Math.round((item.total / total) * 100);
                     return item;
                 });
-    
+
                 setCategories(updatedCategories);
                 setTotal(total);
                 setLoading(false);
             });
-    
+
             // Unsubscribe from events when no longer in use
             return () => unsub();
-        } catch(e) {
+        } catch (e) {
             console.log(e);
             Alert.alert('Error occured while getting the results');
         }
@@ -76,12 +76,12 @@ const DashboardScreen = ({ navigation, allCategories }) => {
     } else {
         return (
             <View style={styles.container}>
-                {/* <View style={[styles.dateContainer, landscape && { flex: 2 }]}>
-                <DateTypeSelection
-                    date={date}
-                    sendDateToHome={handleDateFilter}
-                />
-            </View> */}
+                <View style={[styles.dateContainer, landscape && { flex: 2 }]}>
+                    <DateTypeSelection
+                        date={date}
+                        sendDateToHome={handleDateFilter}
+                    />
+                </View>
 
                 <View style={styles.chartAndButton}>
                     <View style={styles.chartImage}>
