@@ -9,6 +9,7 @@ import { db } from '../../firebase';
 
 import { styles } from './Styles';
 import AuthContext from '../../context/AuthContext';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 const AddTransactionScreen = ({ navigation }) => {
 
@@ -19,6 +20,7 @@ const AddTransactionScreen = ({ navigation }) => {
     const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'));
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showDatePicker, setShowDatePicker] = useState(false);
 
     const handleTextChange = (text) => {
         if (!text.startsWith('$')) {
@@ -74,7 +76,7 @@ const AddTransactionScreen = ({ navigation }) => {
             setLoading(true);
             await addDoc(collection(db, 'transactions'), {
                 userID,
-                amount: amountValue,
+                amount: parseFloat(amountValue),
                 date,
                 category: {
                     id: category.id,
@@ -162,10 +164,17 @@ const AddTransactionScreen = ({ navigation }) => {
                                 style={[
                                     styles.dateBox,
                                     { marginRight: 30 },
-                                ]}>
+                                ]}
+                                onPress={() => setDate(
+                                        moment().subtract(1, 'days').startOf('day')
+                                        .format('YYYY-MM-DD')
+                                        .toString()
+                                    )
+                                }
+                            >
                                 <View style={styles.textContainer}>
                                     <Text style={styles.dateText}>
-                                        12/21
+                                        { moment().subtract(1, 'days').startOf('day').format('MM/DD') }
                                     </Text>
                                     <Text style={styles.dateText}>Yesterday</Text>
                                 </View>
@@ -175,10 +184,12 @@ const AddTransactionScreen = ({ navigation }) => {
                                 style={[
                                     styles.dateBox,
                                     { marginRight: 30 },
-                                ]}>
+                                ]}
+                                onPress={() => setDate(moment.format('YYYY-MM-DD'))}
+                            >
                                 <View style={styles.textContainer}>
                                     <Text style={styles.dateText}>
-                                        12/20
+                                        { moment().format('MM/DD').toString() }
                                     </Text>
                                     <Text style={styles.dateText}>Today</Text>
                                 </View>
@@ -188,10 +199,17 @@ const AddTransactionScreen = ({ navigation }) => {
                                 style={[
                                     styles.dateBox,
                                     { marginRight: 30 },
-                                ]}>
+                                ]}
+                                onPress={() => setDate(
+                                    moment().add(1, 'days')
+                                    .format('YYYY-MM-DD')
+                                    .toString()
+                                )
+                            }
+                            >
                                 <View style={styles.textContainer}>
                                     <Text style={styles.dateText}>
-                                        12/19
+                                        { moment().add(1, 'days').format('MM/DD') }
                                     </Text>
                                     <Text style={styles.dateText}>Tomorrow</Text>
                                 </View>
@@ -200,7 +218,7 @@ const AddTransactionScreen = ({ navigation }) => {
                             <TouchableOpacity
                                 style={styles.calendarIcon}
                                 onPress={() => {
-                                    alert('');
+                                   setShowDatePicker(true);
                                 }}>
                                 <FontAwesome
                                     name="calendar"
@@ -208,6 +226,8 @@ const AddTransactionScreen = ({ navigation }) => {
                                     color={'#23c0f2'}
                                 />
                             </TouchableOpacity>
+
+                            { showDatePicker && <RNDateTimePicker value={new Date()} hide={showDatePicker} /> }
                         </View>
                     </View>
                 </View>
