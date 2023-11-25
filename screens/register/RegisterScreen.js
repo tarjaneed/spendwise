@@ -7,21 +7,21 @@ import AuthContext from '../../context/AuthContext';
 
 const RegisterScreen = ({ navigation }) => {
 
-  const { email, setEmail, password, setPassword, name, setName, register, username, setUsername, error, setError, reset } = useContext(AuthContext);
+	const { email, setEmail, password, setPassword, name, setName, register, username, setUsername, error, setError, reset } = useContext(AuthContext);
 
 	const [isSelected, setSelection] = useState(false);
 	const [verifyPassword, setVerifyPassword] = useState('');
 
-  const handleVerifyPassword = (verifyPassword) => {
-    if(verifyPassword !== password) {
-      setError('Password not matching.')
-    } else setError('')
-    setVerifyPassword(verifyPassword)
-  }
+	const handleVerifyPassword = (verifyPassword) => {
+		if (verifyPassword !== password) {
+			setError('Password not matching.')
+		} else setError('')
+		setVerifyPassword(verifyPassword)
+	}
 
-  useEffect(() => {
-    reset()
-  }, [])
+	useEffect(() => {
+		reset()
+	}, [])
 
 	return (
 		<View style={styles.container}>
@@ -30,7 +30,7 @@ const RegisterScreen = ({ navigation }) => {
 					<View style={styles.infoTextContainer}>
 						<View style={styles.inputIcon}>
 							<Image
-								source={{uri: 'https://static.thenounproject.com/png/1946983-200.png'}}
+								source={{ uri: 'https://static.thenounproject.com/png/1946983-200.png' }}
 								style={styles.icon}
 							/>
 						</View>
@@ -38,7 +38,7 @@ const RegisterScreen = ({ navigation }) => {
 							<TextInput
 								placeholder='Enter Full Name'
 								style={styles.textInput}
-								onChangeText={(name)=> setName(name)}
+								onChangeText={(name) => setName(name)}
 								value={name}
 							/>
 						</View>
@@ -47,15 +47,15 @@ const RegisterScreen = ({ navigation }) => {
 					<View style={styles.infoTextContainer}>
 						<View style={styles.inputIcon}>
 							<Image
-								source={{uri: 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small/profile-icon-design-free-vector.jpg'}}
+								source={{ uri: 'https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small/profile-icon-design-free-vector.jpg' }}
 								style={styles.icon}
 							/>
 						</View>
 						<View style={styles.textInputBox}>
-							<TextInput 
+							<TextInput
 								placeholder='Enter Username'
 								style={styles.textInput}
-								onChangeText={(username)=> setUsername(username)}
+								onChangeText={(username) => setUsername(username)}
 								value={username}
 							/>
 						</View>
@@ -64,7 +64,7 @@ const RegisterScreen = ({ navigation }) => {
 					<View style={styles.infoTextContainer}>
 						<View style={styles.inputIcon}>
 							<Image
-								source={{uri: 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-email-512.png'}}
+								source={{ uri: 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-email-512.png' }}
 								style={styles.icon}
 							/>
 						</View>
@@ -72,7 +72,7 @@ const RegisterScreen = ({ navigation }) => {
 							<TextInput
 								placeholder='Enter Email Address'
 								style={styles.textInput}
-								onChangeText={(email)=> setEmail(email)}
+								onChangeText={(email) => setEmail(email)}
 								value={email}
 							/>
 						</View>
@@ -81,7 +81,7 @@ const RegisterScreen = ({ navigation }) => {
 					<View style={styles.infoTextContainer}>
 						<View style={styles.inputIcon}>
 							<Image
-								source={{uri: 'https://logowik.com/content/uploads/images/803_lock.jpg'}}
+								source={{ uri: 'https://logowik.com/content/uploads/images/803_lock.jpg' }}
 								style={styles.icon}
 							/>
 						</View>
@@ -89,7 +89,7 @@ const RegisterScreen = ({ navigation }) => {
 							<TextInput
 								placeholder='Enter Password'
 								style={styles.textInput}
-								onChangeText={(password)=> setPassword(password)}
+								onChangeText={(password) => setPassword(password)}
 								value={password}
 								secureTextEntry={true}
 							/>
@@ -99,7 +99,7 @@ const RegisterScreen = ({ navigation }) => {
 					<View style={styles.infoTextContainer}>
 						<View style={styles.inputIcon}>
 							<Image
-								source={{uri: 'https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_verified_user_48px-512.png'}}
+								source={{ uri: 'https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_verified_user_48px-512.png' }}
 								style={styles.icon}
 							/>
 						</View>
@@ -117,30 +117,30 @@ const RegisterScreen = ({ navigation }) => {
 			</View>
 
 			<View style={styles.agreeTermContainer}>
-					<View style={styles.checkboxContainer}>
-						<CheckBox
-							value={isSelected}
-							onValueChange={setSelection}
-							style={styles.checkbox}
-						/>
-						<TouchableOpacity
-							onPress={() => {
-								alert('You have pressed the Terms and Conditions Text')
-							}}
-						>
-							<View style={{flexDirection: 'row'}}>
-								<Text style={styles.agreeText}>
-									Agree with
-								</Text>
-								<Text style={styles.clickableTermText}>
-									&nbsp;Term & Conditions
-								</Text>
-							</View>
-						</TouchableOpacity>
-					</View>
+				<View style={styles.checkboxContainer}>
+					<CheckBox
+						value={isSelected}
+						onValueChange={setSelection}
+						style={styles.checkbox}
+					/>
+					<TouchableOpacity
+						onPress={() => {
+							alert('You have pressed the Terms and Conditions Text')
+						}}
+					>
+						<View style={{ flexDirection: 'row' }}>
+							<Text style={styles.agreeText}>
+								Agree with
+							</Text>
+							<Text style={styles.clickableTermText}>
+								&nbsp;Term & Conditions
+							</Text>
+						</View>
+					</TouchableOpacity>
+				</View>
 			</View>
 
-      {error && <Text style={{color: 'red', textAlign: 'center'}}>{error}</Text>}
+			{error && <Text style={{ color: 'red', textAlign: 'center' }}>{error}</Text>}
 
 			<TouchableOpacity
 				onPress={() => {

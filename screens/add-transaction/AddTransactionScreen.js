@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Button, FlatList, ActivityIndicator, Alert } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 
-import { collection, addDoc, query, onSnapshot, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, addDoc, query, onSnapshot, doc, getDoc, updateDoc, where } from 'firebase/firestore';
 
 import { db } from '../../firebase';
 
 import { styles } from './Styles';
+import AuthContext from '../../context/AuthContext';
 
 const AddTransactionScreen = ({ navigation }) => {
 
+    const { userID } = useContext(AuthContext);
     const [amount, setAmount] = useState('');
     const [comment, setComment] = useState('');
     const [category, setCategory] = useState(null);
@@ -27,7 +29,7 @@ const AddTransactionScreen = ({ navigation }) => {
 
     // Lists Categories
     useEffect(() => {
-        const q = query(collection(db, 'categories'));
+        const q = query(collection(db, 'categories'), where('userID', '==', userID));
         const unsub = onSnapshot(q, (querySnapshot) => {
             let categories = [];
             querySnapshot.forEach((doc) => {
@@ -71,6 +73,7 @@ const AddTransactionScreen = ({ navigation }) => {
         try {
             setLoading(true);
             await addDoc(collection(db, 'transactions'), {
+                userID,
                 amount: amountValue,
                 date,
                 category: {

@@ -1,14 +1,16 @@
 import { Text, View, TouchableOpacity, FlatList, landscape, Alert, ActivityIndicator } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { styles } from './Styles';
 import moment from 'moment';
 import DateTypeSelection from '../../components/dateTypeSelection/DateTypeSelection';
 
 import { db } from '../../firebase';
-import { collection, query, onSnapshot, orderBy, updateDoc, getDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy, updateDoc, getDoc, deleteDoc, doc, where } from 'firebase/firestore';
+import AuthContext from '../../context/AuthContext';
 
 const TransactionsScreen = ({ }) => {
 
+	const { userID } = useContext(AuthContext);
 	const [loading, setLoading] = useState(false);
 	const [transactions, setTransactions] = useState([]);
 	const [sortField, setSortField] = useState('amount');
@@ -18,7 +20,7 @@ const TransactionsScreen = ({ }) => {
 
 	// Lists transactions
 	useEffect(() => {
-		const q = query(collection(db, 'transactions'), orderBy(sortField, 'desc'));
+		const q = query(collection(db, 'transactions'), where('userID', '==', userID), orderBy(sortField, 'desc'));
 		const unsub = onSnapshot(q, (querySnapshot) => {
 			let transactions = [];
 			querySnapshot.forEach((doc) => {
