@@ -4,7 +4,9 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { collection, addDoc } from 'firebase/firestore';
+
 
 const AuthContext = createContext();
 
@@ -39,6 +41,7 @@ export const AuthProvider = ({ children }) => {
                 setSignedIn(true);
                 AsyncStorage.setItem("token", user?.stsTokenManager?.accessToken);
                 AsyncStorage.setItem("userID", user?.uid);
+                setEmail(username)
             })
             .catch((error) => {
                 setError(`Email/Password is incorrect`);
@@ -53,6 +56,11 @@ export const AuthProvider = ({ children }) => {
                 // Register
                 const user = userCredential.user;
                 setSignedIn(true);
+                addDoc(collection(db, 'users'), {
+                  id: userCredential.user.uid,
+                  email: username,
+                  name,
+              })
                 try {
                     const userToken = await AsyncStorage.getItem("token");
                     if (userToken) {
