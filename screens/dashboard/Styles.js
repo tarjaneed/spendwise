@@ -97,13 +97,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontWeight: 'bold'
-    },
-    amountDisplay :{
-        fontWeight: 'bold',
-         fontSize: 25, 
-         color: '#005A9C',
-         textAlign: 'center',
-        }
+    }
 });
 
 export { styles };

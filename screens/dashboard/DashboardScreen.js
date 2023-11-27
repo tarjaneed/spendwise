@@ -47,10 +47,8 @@ const DashboardScreen = ({ navigation, allCategories }) => {
 
         return (
             <View style={styles.container}>
-                <View style={styles.chartAndButton}>
-          
-                <PieChart categories={categories} />
-                <Text style ={styles.amountDisplay}>$ {total}</Text>
+                <View style={styles.chartAndButton}>        
+                <PieChart categories={categories}  total ={total} />
                     <View style={styles.addButton}>
                         <Button
                             mode="contained"
