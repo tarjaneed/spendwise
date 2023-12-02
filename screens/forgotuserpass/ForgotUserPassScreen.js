@@ -1,10 +1,23 @@
-import React, {  } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import call from 'react-native-phone-call';
+import { Text, View, Image, TouchableOpacity, Linking } from 'react-native';
 import { styles } from './Styles';
+
 
 
 const ForgotUserPassScreen = ({ navigation }) => {
 
+    const [inputValue, setInputValue] = useState('1-800-773-6399');
+
+    const triggerCall = () => {
+        const args ={
+            number: inputValue,
+            prompt: true,
+        };
+        // Make a call
+        call(args).catch(console.error);
+    }
+    
     return (
         <View style={styles.container}>
             <View style={styles.headingContainer}>
@@ -24,9 +37,13 @@ const ForgotUserPassScreen = ({ navigation }) => {
                         style={styles.icon}
                     />
                     <View style={styles.textbox}>
-                        <Text style={styles.textboxText}>
-                            1-800-SPENDWZ   (1-800-773-6399)
-                        </Text>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={triggerCall}>
+                            <Text style={styles.textboxText}>
+                                1-800-SPENDWZ   (1-800-773-6399)
+                            </Text>
+                        </TouchableOpacity>
                     </View>
 				</View>
                 <View style={styles.contactContainer}>
@@ -35,9 +52,15 @@ const ForgotUserPassScreen = ({ navigation }) => {
                         style={styles.icon}
                     />
                     <View style={styles.textbox}>
-                        <Text style={styles.textboxText}>
-                            support@spendwise.com
-                        </Text>
+                        <TouchableOpacity  
+                            activeOpacity={0.7}
+                            onPress={()=>{
+                                Linking.openURL('mailto:support@spendwise.com')
+                            }}>
+                            <Text style={styles.textboxText}>
+                                support@spendwise.com
+                            </Text>
+                        </TouchableOpacity>
                     </View>
 				</View>
             </View>
