@@ -21,34 +21,35 @@ const styles = StyleSheet.create ({
         fontWeight: 'bold',
     },
     descriptionContainer: {
-        height: deviceHeight/10, 
+        height: deviceHeight/6, 
         width: deviceWidth,
         justifyContent: 'center',
-        padding: 15, 
+        padding: 25, 
     },
     descriptionText: {
-        height: deviceHeight/20,
+        fontSize: 15,
+
     },
     infoContainer: {
-        height: deviceHeight/4,
+        height: deviceHeight/3,
         width: deviceWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    contactContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+
     },
-    inputIcon: {
+    icon: {
         backgroundColor: 'white',
         width: 2 * (deviceHeight / 30), 
         height: 2 * (deviceHeight / 30), 
         justifyContent: 'center',
         alignItems: 'center', 
-        marginTop: 50, 
+        marginTop: 30, 
     },
-    icon: {
-        height: 2 * (deviceHeight / 43),
-        width: 2 * (deviceHeight / 43),
-         
-    },
-    textInputBox: {
+    textbox: {
         height: 2 * (deviceHeight / 30),
         width: 3 * (deviceWidth / 4.5),
         borderColor: 'white',
@@ -56,39 +57,23 @@ const styles = StyleSheet.create ({
         borderWidth: 1,
         justifyContent: 'center',
         marginBottom: 20,
-        marginTop: 50,
+        marginTop: 30,
     },
-    forgotPassContainer: {
+    textboxText: {
+        fontWeight: 'bold',
+        fontSize: deviceHeight/40,
+        marginLeft: 30,
+    },
+    returntoLoginContainer: {
         jutifyContent: 'center',
         alignItems: 'center',
         padding: 5,
+        marginTop: 30,
     },
-    forgotPassText: {
+    returntoLoginText: {
         fontSize: deviceWidth / 27,
         color: '#23c0f2',
     },
-    touchableRecoverUserContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    touchableRecoverUserButton: {
-        height: 50,
-        width: 290,
-        borderColor: 'white',
-        backgroundColor: '#23c0f2',
-        borderWidth: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#23c0f2',
-        marginBottom: 2,
-        marginTop: 5
-    },
-    recoverUserText: {
-        color: 'white',
-        fontSize: deviceWidth / 20,
-        fontWeight: 'bold'
-    },
-
 
 });
 
