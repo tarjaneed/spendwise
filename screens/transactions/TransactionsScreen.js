@@ -13,7 +13,6 @@ import AuthContext from '../../context/AuthContext';
 
 const TransactionsScreen = ({ navigation }) => {
 
-	const pickerRef = useRef(null);
 	const { userID } = useContext(AuthContext);
 	const [loading, setLoading] = useState(false);
 	const [transactions, setTransactions] = useState([]);

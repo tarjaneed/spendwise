@@ -1,35 +1,32 @@
 import { useContext, useEffect } from 'react';
-import { View, TouchableOpacity, Image, Text, ImageBackground, Alert } from 'react-native';
+import { View, TouchableOpacity, Image, Text, ImageBackground, Alert, Share } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
-
-
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+import { db } from '../../firebase';
 import AuthContext from '../../context/AuthContext';
-
 import { styles } from './Styles';
 
 const CustomDrawerComponent = (props) => {
     const { signOut, name, setName, email } = useContext(AuthContext);
 
     useEffect(() => {
-      const fetchData = async () => {
-        const q = query(collection(db, "users"), where("email", "==", email));
+        const fetchData = async () => {
+            const q = query(collection(db, "users"), where("email", "==", email));
 
-        try {
-          const querySnapshot = await getDocs(q);
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            setName(data?.name);
-          });
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
+            try {
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    setName(data?.name);
+                });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
-      fetchData();
+        fetchData();
     }, [email]);
 
     return (
@@ -57,7 +54,16 @@ const CustomDrawerComponent = (props) => {
             </DrawerContentScrollView>
 
             <View style={styles.footerContainer}>
-                <TouchableOpacity onPress={() => { Alert.alert('Share App') }} style={styles.footerItemContainer}>
+                <TouchableOpacity onPress={async () => {
+                    try {
+                        await Share.share({
+                            message: 'Checkout the Spendwise App: Here goes the url!'
+                        });
+                    } catch (error) {
+                        Alert.alert('Error sharing app!')
+                    }
+                }}
+                    style={styles.footerItemContainer}>
                     <View style={styles.footerItemContent}>
                         <Ionicons name="share-social-outline" size={22} />
                         <Text style={styles.footerItemText}>
