@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     cardDate: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'row',
     },
     divider: {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         borderColor: '#D3D3D3',
     },
     cardText: {
-        flex: 6,
+        flex: 5,
         marginLeft: 3,
     },
     cardAmount: {
@@ -84,6 +84,55 @@ const styles = StyleSheet.create({
         height: 15,
         borderRadius: 18 / 2,
     },
+    centeredView: {
+        height: deviceHeight,
+        width: deviceWidth,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    modalView: {
+        margin: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+        padding: 15,
+        width: 3 * (deviceHeight / 7),
+        shadowColor: '#d3d3d3',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        backgroundColor: '#080516',
+    },
+    customOptions: {
+        backgroundColor: "#080516",
+        textHeaderColor: "#469ab6",
+        textDefaultColor: "#FFFFFF",
+        selectedTextColor: "#d3d3d3",
+        mainColor: "#469ab6",
+        textSecondaryColor: "#FFFFFF",
+        borderColor: "rgba(122, 146, 165, 0.1)",
+        textFontSize: deviceHeight / 50,
+    },
+    doneView: {
+        marginTop: -15,
+        backgroundColor: '#080516',
+        width: 2 * (deviceHeight / 5.1),
+        padding: 5,
+        borderColor: "rgba(122, 146, 165, 0.1)",
+    },
+    doneText: {
+        paddingEnd: 10,
+        paddingBottom: 10,
+        fontSize: deviceHeight / 50,
+        textAlign: 'right',
+        fontWeight: 'bold',
+        color: '#469ab6'
+    }
 });
 
 export { styles };
