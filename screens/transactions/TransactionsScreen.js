@@ -1,8 +1,11 @@
-import { Text, View, TouchableOpacity, FlatList, landscape, Alert, ActivityIndicator, Modal } from 'react-native';
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Text, View, TouchableOpacity, FlatList, landscape, Alert, ActivityIndicator, Modal, Linking } from 'react-native';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 
 import DatePicker from 'react-native-modern-datepicker';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import * as FileSystem from 'expo-file-system';
+import { jsonToCSV } from 'react-native-csv'
+import * as Sharing from 'expo-sharing';
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 
 import { styles } from './Styles';
@@ -30,15 +33,26 @@ const TransactionsScreen = ({ navigation }) => {
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => (
-				<FontAwesome
-					style={{ paddingEnd: 10 }}
-					name="filter"
-					size={30}
-					color={'#000000'}
-					onPress={() => {
-						setShowDatePicker(true);
-					}}
-				/>
+				<View style={{ flexDirection: 'row' }}>
+					<FontAwesome
+						style={{ paddingEnd: 10 }}
+						name="filter"
+						size={25}
+						color={'#000000'}
+						onPress={() => {
+							setShowDatePicker(true);
+						}}
+					/>
+					<FontAwesome
+						style={{ paddingEnd: 10 }}
+						name="file-csv"
+						size={25}
+						color={'#000000'}
+						onPress={() => {
+							handleExportToCsv();
+						}}
+					/>
+				</View>
 			)
 		});
 	}, [navigation]);
@@ -54,7 +68,7 @@ const TransactionsScreen = ({ navigation }) => {
 			}
 			else {
 				q = query(q, orderBy('date'), where('date', '>=', filterStartDate), where('date', '<=', filterEndDate));
-			} 
+			}
 		}
 
 		if (sortField) {
@@ -84,6 +98,57 @@ const TransactionsScreen = ({ navigation }) => {
 			unsubscribeFocus();
 		}
 	}, [sortField, selectedStartDate]);
+
+	const saveCsvToFile = async (csvData, fileName) => {
+		const path = `${FileSystem.documentDirectory}${fileName}.csv`;
+		await FileSystem.writeAsStringAsync(path, csvData, { encoding: FileSystem.EncodingType.UTF8 });
+		return path;
+	};
+
+	const openCsvFile = async (fileName) => {
+		try {
+			const fileUri = `${FileSystem.documentDirectory}${fileName}.csv`;
+
+			await FileSystem.getContentUriAsync(fileUri)
+				.then(async (contentUri) => {
+					await Sharing.shareAsync(contentUri, {
+						UTI: 'csv',
+						mimeType: 'csv',
+					});
+				})
+				.catch(error => {
+					console.error('Error getting content URI:', error);
+				});
+		} catch (error) {
+			console.error('Error opening CSV file:', error);
+		}
+	};
+
+	const handleExportToCsv = async () => {
+		let jsonData = [];
+		let q = query(collection(db, 'transactions'), where('userID', '==', userID));
+
+		const unsubscribe = onSnapshot(q, async(querySnapshot) => {
+			querySnapshot.forEach((doc) => {
+				let transaction = doc.data();
+				jsonData.push({
+					'Category': transaction.category.name, 'Date': transaction.date, 'Amount': transaction.amount, 'Notes': transaction.notes,
+				});
+			});
+
+			const csvData = jsonToCSV(jsonData);
+			const fileName = 'exported_data';
+
+			try {
+				const filePath = await saveCsvToFile(csvData, fileName);
+				// Open the saved CSV file immediately
+				await openCsvFile(fileName);
+			} catch (error) {
+				console.error('Error exporting to CSV:', error);
+			}
+			unsubscribe();
+		});
+	};
 
 	const handleDateFilter = () => {
 		setShowDatePicker(false);
