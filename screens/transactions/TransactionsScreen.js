@@ -71,8 +71,18 @@ const TransactionsScreen = ({ navigation }) => {
 			setLoading(false);
 		});
 
+		const unsubscribeFocus = navigation.addListener('focus', () => {
+			setPickDate(null);
+			setSelectedStartDate(null);
+			setFilterStartDate(null);
+			setFilterEndDate(null);
+		});
+
 		// Unsubscribe from events when no longer in use
-		return () => unsub();
+		return () => {
+			unsub();
+			unsubscribeFocus();
+		}
 	}, [sortField, selectedStartDate]);
 
 	const handleDateFilter = () => {
