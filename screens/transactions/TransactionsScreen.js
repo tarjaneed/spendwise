@@ -1,23 +1,67 @@
-import { Text, View, TouchableOpacity, FlatList, landscape, Alert, ActivityIndicator } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
-import { styles } from './Styles';
+import { Text, View, TouchableOpacity, FlatList, landscape, Alert, ActivityIndicator, Modal } from 'react-native';
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+
+import DatePicker from 'react-native-modern-datepicker';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
+
+import { styles } from './Styles';
 
 import { db } from '../../firebase';
 import { collection, query, onSnapshot, orderBy, updateDoc, getDoc, deleteDoc, doc, where } from 'firebase/firestore';
 import AuthContext from '../../context/AuthContext';
 
-const TransactionsScreen = ({ }) => {
+const TransactionsScreen = ({ navigation }) => {
 
+	const pickerRef = useRef(null);
 	const { userID } = useContext(AuthContext);
 	const [loading, setLoading] = useState(false);
 	const [transactions, setTransactions] = useState([]);
-	const [sortField, setSortField] = useState('amount');
+	const [sortField, setSortField] = useState('date');
+	const [date, setDate] = useState(new Date());
+	const [showDatePicker, setShowDatePicker] = useState(false);
+
+	const startDate = '2022-01-01';
+	const [pickDate, setPickDate] = useState(null); // moment(new Date()).format('YYYY-MM')
+	const [selectedStartDate, setSelectedStartDate] = useState(null); // moment(new Date()).format('YYYY-MM')
+	const [startedDate, setStartedDate] = useState(startDate);
+	const [filterStartDate, setFilterStartDate] = useState(null);
+	const [filterEndDate, setFilterEndDate] = useState(null);
+
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerRight: () => (
+				<FontAwesome
+					style={{ paddingEnd: 10 }}
+					name="filter"
+					size={30}
+					color={'#000000'}
+					onPress={() => {
+						setShowDatePicker(true);
+					}}
+				/>
+			)
+		});
+	}, [navigation]);
 
 	// Lists transactions
 	useEffect(() => {
-		console.log('userID', userID);
-		const q = query(collection(db, 'transactions'), where('userID', '==', userID), orderBy(sortField, 'desc'));
+		setLoading(true);
+		let q = query(collection(db, 'transactions'), where('userID', '==', userID));
+
+		if (selectedStartDate) {
+			if (sortField == 'date') {
+				q = query(q, where('date', '>=', filterStartDate), where('date', '<=', filterEndDate));
+			}
+			else {
+				q = query(q, orderBy('date'), where('date', '>=', filterStartDate), where('date', '<=', filterEndDate));
+			} 
+		}
+
+		if (sortField) {
+			q = query(q, orderBy(sortField, 'desc'));
+		}
+
 		const unsub = onSnapshot(q, (querySnapshot) => {
 			let transactions = [];
 			querySnapshot.forEach((doc) => {
@@ -30,7 +74,17 @@ const TransactionsScreen = ({ }) => {
 
 		// Unsubscribe from events when no longer in use
 		return () => unsub();
-	}, [sortField]);
+	}, [sortField, selectedStartDate]);
+
+	const handleDateFilter = () => {
+		setShowDatePicker(false);
+		if (pickDate) {
+			const filterDate = pickDate.replace(' ', '-');
+			setFilterStartDate(`${filterDate}-01`);
+			setFilterEndDate(`${filterDate}-31`);
+			setSelectedStartDate(filterDate);
+		}
+	}
 
 	const sortTransactions = (property) => {
 		setSortField(property);
@@ -87,7 +141,7 @@ const TransactionsScreen = ({ }) => {
 						{moment(new Date(item.date)).format('DD')}
 					</Text>
 					<Text style={styles.text}>
-						{moment(new Date(item.date)).format('MMM')}
+						{moment(new Date(item.date)).format('MMM')}'{moment(new Date(item.date)).format('YY')}
 					</Text>
 				</View>
 				<View style={styles.divider} />
@@ -114,7 +168,7 @@ const TransactionsScreen = ({ }) => {
 		);
 	} else {
 		return (
-		<View style={{ flex: 1 ,backgroundColor: '#f0ffff'}}>
+			<View style={{ flex: 1, backgroundColor: '#f0ffff' }}>
 				<View style={[styles.dataContainer, landscape && { flex: 3 }]}>
 					<FlatList
 						data={transactions}
@@ -137,6 +191,29 @@ const TransactionsScreen = ({ }) => {
 						<Text style={styles.footerText}>Sort by Amount</Text>
 					</TouchableOpacity>
 				</View>
+
+				{/* Create modal for date picker */}
+				<Modal
+					animationType="slide"
+					transparent={true}
+					visible={showDatePicker}
+				>
+					<TouchableOpacity style={styles.centeredView} onPress={() => setShowDatePicker(false)}>
+						<View style={styles.modalView}>
+							<DatePicker
+								mode="monthYear"
+								minimumDate={startDate}
+								selected={startedDate}
+								onMonthYearChange={date => setPickDate(date)}
+								options={styles.customOptions}
+							/>
+
+							<TouchableOpacity style={styles.doneView} onPress={pickDate && handleDateFilter}>
+								<Text style={styles.doneText}>Done</Text>
+							</TouchableOpacity>
+						</View>
+					</TouchableOpacity>
+				</Modal>
 			</View>
 		);
 	}

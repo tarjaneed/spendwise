@@ -32,7 +32,6 @@ const CustomDrawerComponent = (props) => {
       fetchData();
     }, [email]);
 
-
     return (
         <View style={styles.container}>
             <DrawerContentScrollView
