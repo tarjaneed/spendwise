@@ -212,10 +212,10 @@ const TransactionsScreen = ({ navigation }) => {
 			<View style={styles.cardDate}>
 				<View>
 					<Text style={styles.text}>
-						{moment(new Date(item.date)).format('DD')}
+						{moment((item.date)).format('DD')}
 					</Text>
 					<Text style={styles.text}>
-						{moment(new Date(item.date)).format('MMM')}'{moment(new Date(item.date)).format('YY')}
+						{moment((item.date)).format('MMM')}'{moment((item.date)).format('YY')}
 					</Text>
 				</View>
 				<View style={styles.divider} />
