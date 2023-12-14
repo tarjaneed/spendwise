@@ -189,6 +189,28 @@ In this simplified example, `MyComponent` is created and styled separately in it
 
 You can follow a similar approach for creating components, styles, and using them in your app.
 
+## Creating Firebase Collection
+
+To store expense data, Spendwise uses Firebase Firestore, a NoSQL cloud database. Follow these steps to create a Firebase collection for your expenses:
+
+1. **Go to Firebase Console**: Open the [Firebase Console](https://console.firebase.google.com/) in your web browser.
+
+2. **Select Your Project**: If you haven't created a project for Spendwise yet, create one. Otherwise, select your existing Spendwise project.
+
+3. **Go to Firestore Database**: In the Firebase Console, navigate to the "Firestore Database" section.
+
+4. **Create a Collection**: Click on the "Start collection" button to create a new collection. 
+
+5. **Set Collection ID**: Enter a name for your collection, for example, "expenses," in the "Collection ID" field.
+
+6. **Set Document ID**: You can either allow Firestore to auto-generate a document ID or specify your own. Each document in the "expenses" collection will represent a single expense entry.
+
+7. **Add Fields**: For each expense entry, you may want to include fields such as `amount`, `category`, `description`, `date`, etc. Click on "Add field" for each field you want to include and set its type.
+
+8. **Set Security Rules**: In the Firebase Console, go to the "Firestore Database" > "Rules" tab. Make sure your security rules are appropriately configured to control access to your data.
+
+9. **Save Changes**: Once you have set up your collection and defined the necessary fields, click on "Create" to save your changes.
+
 ## Support
 
 If you encounter any issues or have questions, please don't hesitate to [create an issue](https://github.com/your-username/spendwise/issues). We're here to help!
