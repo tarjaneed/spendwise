@@ -189,7 +189,7 @@ In this simplified example, `MyComponent` is created and styled separately in it
 
 You can follow a similar approach for creating components, styles, and using them in your app.
 
-## Creating Firebase Collection
+**Creating Firebase Collection**
 
 To store expense data, Spendwise uses Firebase Firestore, a NoSQL cloud database. Follow these steps to create a Firebase collection for your expenses:
 
